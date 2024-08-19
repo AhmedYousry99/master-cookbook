@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">Master Cookbook</string>
+    <string name="privacy_notice_and_terms_of_use">By using Master Cookbook, you agree to our Privacy Notice and Terms of Use</string>
+    <string name="log_in_text">Already have an account? Log In</string>
+    <string name="sign_up_email_text">Sign up with an email</string>
+    <string name="google_text">Google</string>
+    <string name="skip_button">Skip</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="sign_up_main">Sign Up</string>
+    <string name="display_name_signup">Display Name</string>
+    <string name="email_signup">Email</string>
+    <string name="password_signup">Password</string>
+    <string name="confirm_password_signup">Confirm Password</string>
+    <string name="signup_button">Sign Up</string>
+    <string name="email_login">Email</string>
+    <string name="password_login">Password</string>
+    <string name="login_button">Login</string>
+    <string name="login_main">Login</string>
+    <string name="display_name_error_message">Display name must be at least of size 2</string>
+    <string name="email_error_message">Email is invalid</string>
+    <string name="password_error_message">password must be at least of size 6</string>
+    <string name="confirm_password_error_message">passwords do not match</string>
+    <string name="progress_bar_dialog_text">Loading</string>
+    <string name="skip_dialog_message">You won’t have access to most features if you don’t login</string>
+    <string name="google_choose_account_error">Failed to login using google</string>
+    <string name="dialog_on_confirm_default">Confirm</string>
+    <string name="dialog_on_cancel_default">Cancel</string>
+    <string name="splash_retry_dialog">Something went wrong while getting your data, Try again?</string>
+    <string name="splash_dialog_on_confirm">Retry</string>
+    <string name="splash_dialog_on_cancel">Cancel</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_search">Search</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_plan">Plan</string>
+    <string name="title_profile">Profile</string>
+    <string name="daily_inspirations_text">Daily Inspirations</string>
+    <string name="check_ingredients_text">Check Ingredients!</string>
+    <string name="countries_text">Countries</string>
+    <string name="ingredients_text">Ingredients</string>
+    <string name="more_you_might_like_text">More you might like</string>
 </resources>
