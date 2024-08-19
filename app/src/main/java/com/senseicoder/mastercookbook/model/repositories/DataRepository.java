@@ -11,21 +11,21 @@ import com.senseicoder.mastercookbook.util.callbacks.DatabaseCallback;
 
 public interface DataRepository {
 
-    public void addUser(UserDTO userDTO, DatabaseCallback databaseCallback);
+    void addUser(UserDTO userDTO, DatabaseCallback databaseCallback);
 
-    public void getUserByEmail(String email, GetUserByEmailCallback callback);
+    void getUserByEmail(String email, GetUserByEmailCallback callback);
 
-    public void getUserByIdOrAddUser(UserDTO userDTO, GetUserByIdOrAddUserCallback callback);
+    void getUserByIdOrAddUser(UserDTO userDTO, GetUserByIdOrAddUserCallback callback);
 
-    public UserDTO getCurrentUser();
+    UserDTO getCurrentUser();
 
-    public void getCategories(GetCategoriesCallback callback);
+    void getCategories(GetCategoriesCallback callback);
 
-    public void getCountries(GetCountriesCallback callback);
+    void getCountries(GetCountriesCallback callback);
 
-    public void getIngredients(GetIngredientsCallback callback);
+    void getIngredients(GetIngredientsCallback callback);
 
-    public void getMealOfTheDay(GetMealOfTheDayCallback callback);
+    void getMealOfTheDay(GetMealOfTheDayCallback callback);
 
-    public void setCurrentUser(UserDTO userDTO);
+    void setCurrentUser(UserDTO userDTO);
 }

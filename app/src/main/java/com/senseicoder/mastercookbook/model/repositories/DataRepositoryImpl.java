@@ -76,7 +76,7 @@ public class DataRepositoryImpl implements DataRepository{
     }
 
     @Override
-    public void setCurrentUser(UserDTO userDTO) {
+    public void setCurrentUser(@Nullable UserDTO userDTO) {
         currentUser = userDTO;
     }
 }
