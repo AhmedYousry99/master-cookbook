@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.senseicoder.mastercookbook.R;
+import com.senseicoder.mastercookbook.util.global.UiUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,21 +38,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        applyInsetsOnView(findViewById(R.id.mainContainer));
+        UiUtils.applyAppBarInsetsOnView(findViewById(R.id.mainContainer));
     }
-
-    private void applyInsetsOnView(View view){
-        ViewCompat.setOnApplyWindowInsetsListener(toolbar, new androidx.core.view.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsetsCompat onApplyWindowInsets(View view, WindowInsetsCompat insets) {
-                int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
-                // Adjust the top margin of the toolbar
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
-                params.topMargin = statusBarHeight;
-                toolbar.setLayoutParams(params);
-                return insets;
-            }
-        });
-    }
-
 }
