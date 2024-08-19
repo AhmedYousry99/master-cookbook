@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/HomeFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.senseicoder.mastercookbook.main.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="com.senseicoder.mastercookbook.main.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/FavoriteFragment"
+        android:name="com.senseicoder.mastercookbook.main.ui.favorite.FavoriteFragment"
+        android:label="@string/title_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/PlanFragment"
+        android:name="com.senseicoder.mastercookbook.main.ui.plan.PlanFragment"
+        android:label="@string/title_plan"
+        tools:layout="@layout/fragment_plan" />
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.senseicoder.mastercookbook.main.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
