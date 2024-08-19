@@ -4,12 +4,12 @@ package com.senseicoder.mastercookbook.main.ui.home.presenter;
 
 public interface HomePresenter {
 
-    public void getCategories();
+    void getCategories();
 
-    public void getCountries();
+    void getCountries();
 
-    public void getIngredients();
+    void getIngredients();
 
-    public void getMealOfTheDay();
+    void getMealOfTheDay();
 
 }
