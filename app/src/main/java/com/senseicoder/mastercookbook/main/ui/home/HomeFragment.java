@@ -18,6 +18,7 @@ import com.senseicoder.mastercookbook.main.ui.home.presenter.HomePresenterImpl;
 import com.senseicoder.mastercookbook.main.ui.home.view.HomeView;
 import com.senseicoder.mastercookbook.model.repositories.DataRepositoryImpl;
 import com.senseicoder.mastercookbook.network.RetrofitRemoteDataSourceImpl;
+import com.senseicoder.mastercookbook.util.global.UiUtils;
 
 public class HomeFragment extends Fragment implements HomeView {
 
@@ -27,7 +28,7 @@ public class HomeFragment extends Fragment implements HomeView {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        applyInsetsOnHostFragment(view);
+        UiUtils.applyAppBarInsetsOnView(view);
         return view;
     }
 
@@ -40,18 +41,5 @@ public class HomeFragment extends Fragment implements HomeView {
         ));
     }
 
-    private void applyInsetsOnHostFragment(View view){
-        ViewCompat.setOnApplyWindowInsetsListener(view, new androidx.core.view.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsetsCompat onApplyWindowInsets(View view, WindowInsetsCompat insets) {
-                int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
-                // Adjust the top margin of the toolbar
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-                params.topMargin = statusBarHeight;
-                view.setLayoutParams(params);
-                return insets;
-            }
-        });
-    }
 
 }

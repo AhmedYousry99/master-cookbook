@@ -31,7 +31,6 @@ public class FirebaseFirestoreRemoteDataSourceImpl implements DBRemoteDataSource
 
     public FirebaseFirestoreRemoteDataSourceImpl() {
         firebaseFirestoreInstance = FirebaseFirestore.getInstance();
-        //TODO: initialize currentUser
     }
 
     @Override
@@ -49,16 +48,13 @@ public class FirebaseFirestoreRemoteDataSourceImpl implements DBRemoteDataSource
         DocumentReference documentReference = firebaseFirestoreInstance.collection(UserDTO.collectionName).document();
         if(userDTO.getId() == null)
             userDTO.setId(documentReference.getId());
-        documentReference.set(userDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Log.i(TAG, "addUser: Success");
-                    firebaseFirestoreCallback.onDatabaseSuccess();
-                }else{
-                    Log.d(TAG, "addUser: Failure \n" + task.getException().getMessage());
-                    firebaseFirestoreCallback.onDatabaseFailure(task.getException().getMessage());
-                }
+        documentReference.set(userDTO).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Log.i(TAG, "addUser: Success");
+                firebaseFirestoreCallback.onDatabaseSuccess();
+            }else{
+                Log.d(TAG, "addUser: Failure \n" + task.getException().getMessage());
+                firebaseFirestoreCallback.onDatabaseFailure(task.getException().getMessage());
             }
         });
     }

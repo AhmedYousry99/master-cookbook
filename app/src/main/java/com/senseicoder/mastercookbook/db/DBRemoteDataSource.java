@@ -7,13 +7,13 @@ import com.senseicoder.mastercookbook.util.callbacks.DatabaseCallback;
 
 public interface DBRemoteDataSource {
 
-    public void addUser(UserDTO userDTO, DatabaseCallback databaseCallback);
+    void addUser(UserDTO userDTO, DatabaseCallback databaseCallback);
 
-    public void getUserByEmail(String email, GetUserByEmailCallback callback);
+    void getUserByEmail(String email, GetUserByEmailCallback callback);
 
-    public void getUserByIdOrAddUser(UserDTO userDTO, GetUserByIdOrAddUserCallback callback);
+    void getUserByIdOrAddUser(UserDTO userDTO, GetUserByIdOrAddUserCallback callback);
 
-    public UserDTO getCurrentUser();
+    UserDTO getCurrentUser();
 
-    public void setCurrentUser(UserDTO userDTO);
+    void setCurrentUser(UserDTO userDTO);
 }
