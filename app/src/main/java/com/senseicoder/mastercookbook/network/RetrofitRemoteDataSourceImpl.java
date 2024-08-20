@@ -4,15 +4,10 @@ import com.senseicoder.mastercookbook.model.responses.GetCategoriesResponse;
 import com.senseicoder.mastercookbook.model.responses.GetCountriesResponse;
 import com.senseicoder.mastercookbook.model.responses.GetIngredientsResponse;
 import com.senseicoder.mastercookbook.model.responses.GetMealsResponse;
-import com.senseicoder.mastercookbook.network.callbacks.GetCategoriesCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetCountriesCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetIngredientsCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetMealOfTheDayCallback;
 
 import java.io.File;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Cache;
