@@ -41,5 +41,6 @@
     <string name="check_ingredients_text">Check Ingredients!</string>
     <string name="countries_text">Countries</string>
     <string name="ingredients_text">Ingredients</string>
+    <string name="categories_text">Categories</string>
     <string name="more_you_might_like_text">More you might like</string>
 </resources>
