@@ -6,14 +6,16 @@ import com.senseicoder.mastercookbook.model.DTOs.CountryDTO;
 import com.senseicoder.mastercookbook.model.DTOs.IngredientDTO;
 import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
 import com.senseicoder.mastercookbook.model.repositories.DataRepository;
-import com.senseicoder.mastercookbook.network.callbacks.GetCategoriesCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetCountriesCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetIngredientsCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetMealOfTheDayCallback;
+import com.senseicoder.mastercookbook.model.responses.GetCategoriesResponse;
 
 import java.util.List;
 
-public class HomePresenterImpl implements HomePresenter, GetCountriesCallback, GetIngredientsCallback, GetMealOfTheDayCallback, GetCategoriesCallback {
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+
+public class HomePresenterImpl implements HomePresenter {
 
     HomeView homeView;
     DataRepository dataRepository;
@@ -25,12 +27,14 @@ public class HomePresenterImpl implements HomePresenter, GetCountriesCallback, G
 
     @Override
     public void getCategories() {
-
+        Single<List<CategoryDTO>> categoriesSingle= dataRepository.getCategories();
+        categoriesSingle.subscribe(categories -> onGetCategoriesSuccess(categories), e -> onGetCategoriesFailure(e.getMessage()));
     }
 
     @Override
     public void getCountries() {
-
+        Single<List<CountryDTO>> categoriesSingle= dataRepository.getCountries();
+        categoriesSingle.subscribe(countries -> onGetCountriesSuccess(countries), e -> onGetCountriesFailure(e.getMessage()));
     }
 
     @Override
@@ -39,46 +43,52 @@ public class HomePresenterImpl implements HomePresenter, GetCountriesCallback, G
     }
 
     @Override
+    public void getMealsYouMightLike(String letter) {
+        Single<List<MealDTO>> mealOfTheDaySingle= dataRepository.getMealsYouMightLike(letter);
+        mealOfTheDaySingle.subscribe(meals -> onGetMealsYouMightLikeSuccess(meals), e -> onGetMealsYouMightLikeFailure(e.getMessage()));
+    }
+
+    private void onGetMealsYouMightLikeSuccess(List<MealDTO> meals) {
+        homeView.updateMealsYouMightLikeList(meals);
+    }
+
+    private void onGetMealsYouMightLikeFailure(String message) {
+    }
+
+    @Override
     public void getMealOfTheDay() {
-
+        Single<List<MealDTO>> categoriesSingle= dataRepository.getMealOfTheDay();
+        categoriesSingle.subscribe(meal -> onGetMealsOfTheDaySuccess(meal.get(0)), e -> onGetMealsOfTheDayFailure(e.getMessage()));
     }
 
-    @Override
-    public void onGetCountriesSuccess(List<CountryDTO> country) {
-
+    public void onGetCountriesSuccess(List<CountryDTO> countries) {
+        homeView.updateCountriesList(countries);
     }
 
-    @Override
     public void onGetCountriesFailure(String message) {
 
     }
 
-    @Override
     public void onGetIngredientsSuccess(List<IngredientDTO> ingredient) {
 
     }
 
-    @Override
     public void onGetIngredientsFailure(String message) {
 
     }
 
-    @Override
     public void onGetMealsOfTheDaySuccess(MealDTO mealDTO) {
-
+        homeView.updateMealOfTheDayList(mealDTO);
     }
 
-    @Override
     public void onGetMealsOfTheDayFailure(String message) {
 
     }
 
-    @Override
     public void onGetCategoriesSuccess(List<CategoryDTO> categories) {
-
+    homeView.updateCategoriesList(categories);
     }
 
-    @Override
     public void onGetCategoriesFailure(String message) {
 
     }

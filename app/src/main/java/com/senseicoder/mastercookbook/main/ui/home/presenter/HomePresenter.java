@@ -10,6 +10,8 @@ public interface HomePresenter {
 
     void getIngredients();
 
+    void getMealsYouMightLike(String letter);
+
     void getMealOfTheDay();
 
 }

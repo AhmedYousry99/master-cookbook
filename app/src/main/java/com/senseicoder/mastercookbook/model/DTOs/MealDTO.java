@@ -6,6 +6,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class MealDTO {
     @SerializedName(MealKeys.ID_MEAL)
     private String id;
@@ -103,6 +105,11 @@ public class MealDTO {
     private String measure20;
     @SerializedName(MealKeys.STR_SOURCE)
     private String source;
+
+
+    public MealDTO(String title) {
+        this.title = title;
+    }
 
     public MealDTO(String id, String title, String category, String area, String instructions, String thumbnail, String youtube, String ingredient1, String ingredient2, String ingredient3, String ingredient4, String ingredient5, String ingredient6, String ingredient7, String ingredient8, String ingredient9, String ingredient10, String ingredient11, String ingredient12, String ingredient13, String ingredient14, String ingredient15, String ingredient16, String ingredient17, String ingredient18, String ingredient19, String ingredient20, String measure, String measure2, String measure3, String measure4, String measure5, String measure6, String measure7, String measure8, String measure9, String measure10, String measure11, String measure12, String measure13, String measure14, String measure15, String measure16, String measure17, String measure18, String measure19, String measure20, String source) {
         this.id = id;
