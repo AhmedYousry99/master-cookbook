@@ -11,11 +11,12 @@ import com.senseicoder.mastercookbook.network.callbacks.GetMealOfTheDayCallback;
 
 import java.io.File;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -26,6 +27,7 @@ public class RetrofitRemoteDataSourceImpl implements FoodRemoteDataSource{
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private static RetrofitRemoteDataSourceImpl instance = null;
     private FoodService foodService;
+
 
     private RetrofitRemoteDataSourceImpl(File cacheDirectory) {
         int cacheSize = 10 * 1024 * 1024;
@@ -43,62 +45,28 @@ public class RetrofitRemoteDataSourceImpl implements FoodRemoteDataSource{
     }
 
     @Override
-    public void getMealOfTheDay(GetMealOfTheDayCallback callback){
-        foodService.getMealOfTheDay().enqueue(new Callback<GetMealsResponse>() {
-            @Override
-            public void onResponse(Call<GetMealsResponse> call, Response<GetMealsResponse> response) {
-                callback.onGetMealsOfTheDaySuccess(response.body().getMeals().get(0));
-            }
-            @Override
-            public void onFailure(Call<GetMealsResponse> call, Throwable throwable) {
-                callback.onGetMealsOfTheDayFailure(throwable.getMessage());
-            }
-        });
+    public Single<GetMealsResponse> getMealOfTheDay(){
+        return foodService.getMealOfTheDay().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public void getCategories(GetCategoriesCallback getCategoriesCallback) {
-        foodService.getCategoriesList().enqueue(new Callback<GetCategoriesResponse>() {
-            @Override
-            public void onResponse(Call<GetCategoriesResponse> call, Response<GetCategoriesResponse> response) {
-                getCategoriesCallback.onGetCategoriesSuccess(response.body().getCategories());
-            }
-
-            @Override
-            public void onFailure(Call<GetCategoriesResponse> call, Throwable throwable) {
-                getCategoriesCallback.onGetCategoriesFailure(throwable.getMessage());
-            }
-        });
+    public Single<GetCategoriesResponse> getCategories() {
+        return foodService.getCategoriesList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public void getCountries(GetCountriesCallback getCountriesCallback) {
-        foodService.getCountriesList().enqueue(new Callback<GetCountriesResponse>() {
-            @Override
-            public void onResponse(Call<GetCountriesResponse> call, Response<GetCountriesResponse> response) {
-                getCountriesCallback.onGetCountriesSuccess(response.body().getCountry());
-            }
-
-            @Override
-            public void onFailure(Call<GetCountriesResponse> call, Throwable throwable) {
-                getCountriesCallback.onGetCountriesFailure(throwable.getMessage());
-            }
-        });
+    public Single<GetCountriesResponse> getCountries() {
+        return foodService.getCountriesList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public void getIngredients(GetIngredientsCallback getIngredientsCallback) {
-        foodService.getIngredientsList().enqueue(new Callback<GetIngredientsResponse>() {
-            @Override
-            public void onResponse(Call<GetIngredientsResponse> call, Response<GetIngredientsResponse> response) {
-                getIngredientsCallback.onGetIngredientsSuccess(response.body().getIngredient());
-            }
+    public Single<GetIngredientsResponse> getIngredients() {
+       return foodService.getIngredientsList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
 
-            @Override
-            public void onFailure(Call<GetIngredientsResponse> call, Throwable throwable) {
-                getIngredientsCallback.onGetIngredientsFailure(throwable.getMessage());
-            }
-        });
+    @Override
+    public Single<GetMealsResponse> getMoreYouMightLike(String letter) {
+        return foodService.getMealsYouMightLikeList(letter).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     public static RetrofitRemoteDataSourceImpl getInstance(File cacheDirectory) {

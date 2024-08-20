@@ -1,17 +1,26 @@
 package com.senseicoder.mastercookbook.network;
 
+import com.senseicoder.mastercookbook.model.responses.GetCategoriesResponse;
+import com.senseicoder.mastercookbook.model.responses.GetCountriesResponse;
+import com.senseicoder.mastercookbook.model.responses.GetIngredientsResponse;
+import com.senseicoder.mastercookbook.model.responses.GetMealsResponse;
 import com.senseicoder.mastercookbook.network.callbacks.GetCategoriesCallback;
 import com.senseicoder.mastercookbook.network.callbacks.GetCountriesCallback;
 import com.senseicoder.mastercookbook.network.callbacks.GetIngredientsCallback;
 import com.senseicoder.mastercookbook.network.callbacks.GetMealOfTheDayCallback;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+
 public interface FoodRemoteDataSource {
 
-    public void getMealOfTheDay(GetMealOfTheDayCallback getMealOfTheDayCallback);
+    Single<GetMealsResponse> getMealOfTheDay();
 
-    public void getCategories(GetCategoriesCallback getCategoriesCallback);
+    Single<GetCategoriesResponse> getCategories();
 
-    public void getCountries(GetCountriesCallback getCountriesCallback);
+    Single<GetCountriesResponse> getCountries();
 
-    public void getIngredients(GetIngredientsCallback getIngredientsCallback);
+    Single<GetIngredientsResponse> getIngredients();
+
+    Single<GetMealsResponse> getMoreYouMightLike(String letter);
 }
