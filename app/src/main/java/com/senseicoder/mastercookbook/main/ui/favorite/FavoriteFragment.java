@@ -18,7 +18,6 @@ public class FavoriteFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-        UiUtils.applyAppBarInsetsOnView(view);
         return view;
     }
 

@@ -17,7 +17,6 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        UiUtils.applyAppBarInsetsOnView(view);
         return view;
     }
 

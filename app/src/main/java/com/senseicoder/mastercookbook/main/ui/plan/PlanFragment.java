@@ -20,7 +20,6 @@ public class PlanFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_plan, container, false);
-        UiUtils.applyAppBarInsetsOnView(view);
         return view;
     }
 
