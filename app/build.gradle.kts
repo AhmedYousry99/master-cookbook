@@ -57,8 +57,9 @@ dependencies {
     implementation(libs.retrofit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation (libs.adapter.rxjava2)
+    implementation (libs.adapter.rxjava3)
     implementation (libs.rxjava)
+    implementation (libs.rxandroid)
 
 
     implementation (libs.glide)
