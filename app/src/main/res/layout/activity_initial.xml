@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/initial_screen_background"
-    tools:context=".initial.InitialActivity">
+    tools:context=".features.initial.InitialActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

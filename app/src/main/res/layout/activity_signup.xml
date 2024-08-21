@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/secondary"
     android:fillViewport="true"
-    tools:context=".signup.SignupActivity">
+    tools:context=".features.signup.SignupActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/signup_toolbar"
