@@ -11,6 +11,7 @@ public class IngredientDTO {
     @SerializedName(MealKeys.STR_DESCRIPTION)
     private String description;
 
+
     public IngredientDTO(String id, String ingredient, String description) {
         this.id = id;
         this.ingredient = ingredient;

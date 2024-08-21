@@ -4,8 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 public class MealDTO {
@@ -164,14 +165,14 @@ public class MealDTO {
 
     public List<String> getIngredients() {
         List<String> ingredients = new ArrayList<>();
-        Field[] fields = this.getClass().getDeclaredFields();
+        List<Field> fields = Arrays.stream(this.getClass().getDeclaredFields()).distinct().collect(Collectors.toList());
 
         for (Field field : fields) {
             if (field.getName().startsWith("ingredient")) {
                 try {
                     field.setAccessible(true);
                     String value = (String) field.get(this);
-                    if (value != null) {
+                    if (value != null && !value.isEmpty()) {
                         ingredients.add(value);
                     }
                 } catch (IllegalAccessException e) {
@@ -192,7 +193,7 @@ public class MealDTO {
                 try {
                     field.setAccessible(true);
                     String value = (String) field.get(this);
-                    if (value != null) {
+                    if (value != null && !value.isEmpty()) {
                         ingredients.add(value);
                     }
                 } catch (IllegalAccessException e) {

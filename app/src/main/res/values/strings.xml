@@ -43,4 +43,15 @@
     <string name="ingredients_text">Ingredients</string>
     <string name="categories_text">Categories</string>
     <string name="more_you_might_like_text">More you might like</string>
+    <string name="search_by_text">Search By:</string>
+    <string name="search_by_category_text">Category</string>
+    <string name="search_by_country_text">Country</string>
+    <string name="search_by_ingredient_text">Ingredient</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_to_plan_content_description">Add To Plan</string>
+    <string name="add_to_favorite_content_description">Add to favorite</string>
+    <string name="meal_ingredients_text">Ingredients:</string>
+    <string name="instructions_meal_text">Instructions:</string>
+    <string name="meal_fragment">Meal</string>
 </resources>

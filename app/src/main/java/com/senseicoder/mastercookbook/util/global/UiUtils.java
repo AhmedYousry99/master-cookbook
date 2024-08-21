@@ -6,6 +6,10 @@ import android.view.ViewGroup;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.senseicoder.mastercookbook.R;
+
+import java.util.ArrayList;
+
 public class UiUtils {
 
     public static void applyAppBarInsetsOnView(View view){
@@ -18,4 +22,5 @@ public class UiUtils {
             return insets;
         });
     }
+
 }

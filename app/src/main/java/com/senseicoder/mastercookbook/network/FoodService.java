@@ -3,6 +3,7 @@ package com.senseicoder.mastercookbook.network;
 import com.senseicoder.mastercookbook.model.responses.GetCategoriesResponse;
 import com.senseicoder.mastercookbook.model.responses.GetCountriesResponse;
 import com.senseicoder.mastercookbook.model.responses.GetIngredientsResponse;
+import com.senseicoder.mastercookbook.model.responses.GetMealDataResponse;
 import com.senseicoder.mastercookbook.model.responses.GetMealsResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -28,6 +29,10 @@ public interface FoodService {
     @GET(FoodServiceResponseKeys.MEAL_BY_FIRST_LETTER)
     Single<GetMealsResponse> getMealsYouMightLikeList(@Query("f") String letter);
 
+    @GET(FoodServiceResponseKeys.MEAL_BY_ID)
+    Single<GetMealDataResponse> getMealDetailsById(@Query("i") String mealId);
+
+
 
     class FoodServiceResponseKeys{
         public static final String RANDOM = "random.php";
@@ -37,6 +42,7 @@ public interface FoodService {
         public static final String COUNTRIES_LIST = "list.php?a=list";
         public static final String INGREDIENT_LIST = "list.php?i=list";
         public static final String MEAL_BY_FIRST_LETTER = "search.php?f=a";
+        public static final String MEAL_BY_ID = "lookup.php";
     }
 
 

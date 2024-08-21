@@ -2,12 +2,16 @@ package com.senseicoder.mastercookbook.model.repositories;
 
 import com.senseicoder.mastercookbook.db.remote.callbacks.GetUserByEmailCallback;
 import com.senseicoder.mastercookbook.db.remote.callbacks.GetUserByIdOrAddUserCallback;
+import com.senseicoder.mastercookbook.model.DTOs.CategoryDTO;
+import com.senseicoder.mastercookbook.model.DTOs.CountryDTO;
+import com.senseicoder.mastercookbook.model.DTOs.IngredientDTO;
+import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
 import com.senseicoder.mastercookbook.model.DTOs.UserDTO;
-import com.senseicoder.mastercookbook.network.callbacks.GetCategoriesCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetCountriesCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetIngredientsCallback;
-import com.senseicoder.mastercookbook.network.callbacks.GetMealOfTheDayCallback;
 import com.senseicoder.mastercookbook.util.callbacks.DatabaseCallback;
+
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Single;
 
 public interface DataRepository {
 
@@ -19,13 +23,17 @@ public interface DataRepository {
 
     UserDTO getCurrentUser();
 
-    void getCategories(GetCategoriesCallback callback);
+    Single<List<CategoryDTO>> getCategories();
 
-    void getCountries(GetCountriesCallback callback);
+    Single<List<CountryDTO>> getCountries();
 
-    void getIngredients(GetIngredientsCallback callback);
+    Single<List<IngredientDTO>> getIngredients();
 
-    void getMealOfTheDay(GetMealOfTheDayCallback callback);
+    Single<MealDTO> getMealDetailsById(String mealId);
+
+    Single<List<MealDTO>> getMealsYouMightLike(String letter);
+
+    Single<List<MealDTO>> getMealOfTheDay();
 
     void setCurrentUser(UserDTO userDTO);
 }

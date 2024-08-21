@@ -3,7 +3,9 @@ package com.senseicoder.mastercookbook.network;
 import com.senseicoder.mastercookbook.model.responses.GetCategoriesResponse;
 import com.senseicoder.mastercookbook.model.responses.GetCountriesResponse;
 import com.senseicoder.mastercookbook.model.responses.GetIngredientsResponse;
+import com.senseicoder.mastercookbook.model.responses.GetMealDataResponse;
 import com.senseicoder.mastercookbook.model.responses.GetMealsResponse;
+import com.senseicoder.mastercookbook.util.global.Constants;
 
 import java.io.File;
 
@@ -19,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitRemoteDataSourceImpl implements FoodRemoteDataSource{
     public static final String TAG = "RetrofitRemoteDataSourceImpl";
 
-    private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
+    private static final String BASE_URL = Constants.MEALDB_BASE_URL;
     private static RetrofitRemoteDataSourceImpl instance = null;
     private FoodService foodService;
 
@@ -62,6 +64,11 @@ public class RetrofitRemoteDataSourceImpl implements FoodRemoteDataSource{
     @Override
     public Single<GetMealsResponse> getMoreYouMightLike(String letter) {
         return foodService.getMealsYouMightLikeList(letter).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Single<GetMealDataResponse> getMealDetails(String mealId) {
+        return foodService.getMealDetailsById(mealId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     public static RetrofitRemoteDataSourceImpl getInstance(File cacheDirectory) {
