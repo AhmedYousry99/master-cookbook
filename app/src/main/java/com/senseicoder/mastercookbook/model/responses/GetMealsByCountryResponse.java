@@ -1,16 +1,17 @@
 package com.senseicoder.mastercookbook.model.responses;
 
 import com.google.gson.annotations.SerializedName;
-import com.senseicoder.mastercookbook.model.DTOs.CountryDTO;
+import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
 import com.senseicoder.mastercookbook.model.DTOs.MealKeys;
 
 import java.util.List;
 
-public class GetCountriesResponse {
-    @SerializedName(MealKeys.MEALS)
-    List<CountryDTO> country;
+public class GetMealsByCountryResponse {
 
-    public List<CountryDTO> getCountries() {
-        return country;
+    @SerializedName(MealKeys.MEALS)
+    List<MealDTO> meals;
+
+    public List<MealDTO> getMeals() {
+        return meals;
     }
 }
