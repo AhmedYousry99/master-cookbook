@@ -1,6 +1,7 @@
 package com.senseicoder.mastercookbook.model.DTOs;
 
 import com.google.gson.annotations.SerializedName;
+import com.senseicoder.mastercookbook.model.MealKeys;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -106,6 +107,7 @@ public class MealDTO {
     private String measure20;
     @SerializedName(MealKeys.STR_SOURCE)
     private String source;
+    private boolean favorite;
 
 
     public MealDTO(String title) {
@@ -160,7 +162,7 @@ public class MealDTO {
         this.measure18 = measure18;
         this.measure19 = measure19;
         this.measure20 = measure20;
-        this.source = source;
+        favorite = false;
     }
 
     public List<String> getIngredients() {
@@ -217,10 +219,6 @@ public class MealDTO {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -233,40 +231,30 @@ public class MealDTO {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
 
     public String getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
-    }
 
     public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
 
     public String getYoutube() {
         return youtube;
-    }
-
-    public void setYoutube(String youtube) {
-        this.youtube = youtube;
     }
 
     public String getSource() {
         return source;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public boolean isFavorite() {
+        return favorite;
     }
-    
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 }

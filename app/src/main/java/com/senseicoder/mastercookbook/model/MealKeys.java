@@ -1,4 +1,4 @@
-package com.senseicoder.mastercookbook.model.DTOs;
+package com.senseicoder.mastercookbook.model;
 
 public final class MealKeys {
 
@@ -62,4 +62,6 @@ public final class MealKeys {
     public static final String STR_MEASURE19 = "strMeasure19";
     public static final String STR_MEASURE20 = "strMeasure20";
     public static final String STR_SOURCE = "strSource";
+    public static final String FAVORITE_SYNCED = "favoriteSynced";
+    public static final String DAY = "day";
 }

@@ -1,6 +1,7 @@
 package com.senseicoder.mastercookbook.model.DTOs;
 
 import com.google.gson.annotations.SerializedName;
+import com.senseicoder.mastercookbook.model.MealKeys;
 
 public class CountryDTO {
 
