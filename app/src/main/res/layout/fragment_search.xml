@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".features.main.ui.search.SearchFragment">
 
+    <Button
+        android:id="@+id/searchByMealButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="@color/primary"
+        android:text="@string/search_by_meal_text"
+        android:textColor="@color/on_primary"
+        app:layout_constraintBottom_toTopOf="@+id/searchByCategoryButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -22,45 +37,36 @@
         android:id="@+id/searchByCategoryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
         android:backgroundTint="@color/primary"
         android:text="@string/search_by_category_text"
         android:textColor="@color/on_primary"
         app:layout_constraintBottom_toTopOf="@+id/searchByCountryButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintEnd_toEndOf="@+id/searchByMealButton"
+        app:layout_constraintStart_toStartOf="@+id/searchByMealButton"
+        app:layout_constraintTop_toBottomOf="@+id/searchByMealButton" />
 
     <Button
         android:id="@+id/searchByCountryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
         android:backgroundTint="@color/primary"
         android:text="@string/search_by_country_text"
         android:textColor="@color/on_primary"
         app:layout_constraintBottom_toTopOf="@+id/searchByIngredientButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/searchByCategoryButton"
+        app:layout_constraintStart_toStartOf="@+id/searchByCategoryButton"
         app:layout_constraintTop_toBottomOf="@+id/searchByCategoryButton" />
 
     <Button
         android:id="@+id/searchByIngredientButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
         android:backgroundTint="@color/primary"
         android:text="@string/search_by_ingredient_text"
         android:textColor="@color/on_primary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/searchByCountryButton"
+        app:layout_constraintStart_toStartOf="@+id/searchByCountryButton"
         app:layout_constraintTop_toBottomOf="@+id/searchByCountryButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
