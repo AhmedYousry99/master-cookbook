@@ -55,8 +55,10 @@ public class HomeFragment extends Fragment implements HomeView, nestedRecyclerVi
                 FirebaseFirestoreRemoteDataSourceImpl.getInstance(),
                 RetrofitRemoteDataSourceImpl.getInstance(getActivity().getCacheDir())
         ));
+
         mainRecyclerView = view.findViewById(R.id.mainRecyclerView);
         circularProgressBar = view.findViewById(R.id.homeCircularProgressBar);
+
         list = new ArrayList<>();
         categories = new ArrayList<>();
         countries = new ArrayList<>();
@@ -66,18 +68,6 @@ public class HomeFragment extends Fragment implements HomeView, nestedRecyclerVi
         presenter.getMealOfTheDay();
         presenter.getCategories();
         presenter.getMealsYouMightLike("s");
-    }
-
-    private void setupHomeList(){
-        list.clear();
-        list.add(new HomeFragmentItem<>(HomeFragmentItem.MAIN_HEADER, null, 0, null, mealOfTheDay));
-        list.add(new HomeFragmentItem<>(HomeFragmentItem.SECONDARY_HEADER, getString(R.string.countries_text), R.drawable.country_flag_ic, null, null));
-        list.add(new HomeFragmentItem<>(HomeFragmentItem.COUNTRIES, null, 0, countries, null));
-        list.add(new HomeFragmentItem(HomeFragmentItem.SECONDARY_HEADER, getString(R.string.categories_text), R.drawable.category_ic, null, null));
-        list.add(new HomeFragmentItem<>(HomeFragmentItem.CATEGORIES, null, 0, categories, null));
-        list.add(new HomeFragmentItem(HomeFragmentItem.SECONDARY_HEADER, getString(R.string.more_you_might_like_text), R.drawable.question_mark_ic, null, null));
-        list.add(new HomeFragmentItem(HomeFragmentItem.MORE_YOU_MIGHT_LIKE, null, 0, mealsYouMightLike, null));
-        homeRecyclerAdapter.setData(list);
     }
 
 
@@ -116,18 +106,42 @@ public class HomeFragment extends Fragment implements HomeView, nestedRecyclerVi
 
     }
 
+    //TODO: handle favorites addition to db
+
     @Override
     public void onFavoriteClicked(String idMeal) {
 
     }
+    //TODO: create and use countries screen;
 
     @Override
     public void onGetMealsByCountryClicked(String country) {
 
     }
+    //TODO: create and use categories screen;
 
     @Override
     public void onGetMealsByCategoryClicked(String category) {
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.clear();
+    }
+
+    private void setupHomeList(){
+        list.clear();
+        list.add(new HomeFragmentItem<>(HomeFragmentItem.MAIN_HEADER, null, 0, null, mealOfTheDay));
+        list.add(new HomeFragmentItem<>(HomeFragmentItem.SECONDARY_HEADER, getString(R.string.countries_text), R.drawable.country_flag_ic, null, null));
+        list.add(new HomeFragmentItem<>(HomeFragmentItem.COUNTRIES, null, 0, countries, null));
+        list.add(new HomeFragmentItem(HomeFragmentItem.SECONDARY_HEADER, getString(R.string.categories_text), R.drawable.category_ic, null, null));
+        list.add(new HomeFragmentItem<>(HomeFragmentItem.CATEGORIES, null, 0, categories, null));
+        list.add(new HomeFragmentItem(HomeFragmentItem.SECONDARY_HEADER, getString(R.string.more_you_might_like_text), R.drawable.question_mark_ic, null, null));
+        list.add(new HomeFragmentItem(HomeFragmentItem.MORE_YOU_MIGHT_LIKE, null, 0, mealsYouMightLike, null));
+        homeRecyclerAdapter.setData(list);
+    }
+
+
 }
