@@ -1,7 +1,10 @@
 package com.senseicoder.mastercookbook.model.repositories;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
+import com.senseicoder.mastercookbook.db.DBLocalDataSource;
 import com.senseicoder.mastercookbook.db.DBRemoteDataSource;
 import com.senseicoder.mastercookbook.db.remote.callbacks.GetUserByEmailCallback;
 import com.senseicoder.mastercookbook.db.remote.callbacks.GetUserByIdOrAddUserCallback;
@@ -9,13 +12,17 @@ import com.senseicoder.mastercookbook.model.DTOs.CategoryDTO;
 import com.senseicoder.mastercookbook.model.DTOs.CountryDTO;
 import com.senseicoder.mastercookbook.model.DTOs.IngredientDTO;
 import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
+import com.senseicoder.mastercookbook.model.DTOs.MealSimplifiedModel;
+import com.senseicoder.mastercookbook.model.DTOs.PlanDTO;
 import com.senseicoder.mastercookbook.model.DTOs.UserDTO;
 import com.senseicoder.mastercookbook.network.FoodRemoteDataSource;
 import com.senseicoder.mastercookbook.util.callbacks.DatabaseCallback;
 import com.senseicoder.mastercookbook.util.enums.SearchType;
 
 import java.util.List;
+import java.util.Objects;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class DataRepositoryImpl implements DataRepository {
@@ -23,18 +30,20 @@ public class DataRepositoryImpl implements DataRepository {
     private static DataRepositoryImpl instance = null;
     private final DBRemoteDataSource dbRemoteDataSource;
     private final FoodRemoteDataSource foodRemoteDataSource;
-    @Nullable
-    private UserDTO currentUser;
+    private final DBLocalDataSource dbLocalDataSource;
 
-    public static DataRepositoryImpl getInstance(DBRemoteDataSource dbRemoteDataSource, FoodRemoteDataSource foodRemoteDataSource) {
+    private static final String TAG = "DataRepositoryImpl";
+
+    public static DataRepositoryImpl getInstance(DBRemoteDataSource dbRemoteDataSource, FoodRemoteDataSource foodRemoteDataSource, DBLocalDataSource dbLocalDataSource) {
         if (instance == null)
-            instance = new DataRepositoryImpl(dbRemoteDataSource, foodRemoteDataSource);
+            instance = new DataRepositoryImpl(dbRemoteDataSource, foodRemoteDataSource, dbLocalDataSource);
         return instance;
     }
 
-    public DataRepositoryImpl(DBRemoteDataSource dbRemoteDataSource, FoodRemoteDataSource foodRemoteDataSource) {
+    public DataRepositoryImpl(DBRemoteDataSource dbRemoteDataSource, FoodRemoteDataSource foodRemoteDataSource, DBLocalDataSource dbLocalDataSource) {
         this.dbRemoteDataSource = dbRemoteDataSource;
         this.foodRemoteDataSource = foodRemoteDataSource;
+        this.dbLocalDataSource = dbLocalDataSource;
     }
 
 
@@ -101,7 +110,43 @@ public class DataRepositoryImpl implements DataRepository {
     }
 
     @Override
+    public Single<List<MealSimplifiedModel>> getFavoriteMeals(String userId) {
+        return dbLocalDataSource.getAllFavoriteMeals(userId);
+    }
+
+    @Override
+    public Completable addMealToFavorites(MealSimplifiedModel meal) {
+        return dbLocalDataSource.addMealIntoFavorite(meal);
+    }
+
+    @Override
+    public Completable deleteMealFromFavorite(MealSimplifiedModel meal) {
+        return dbLocalDataSource.deleteMealFromFavorite(meal);
+    }
+
+    @Override
     public void setCurrentUser(@Nullable UserDTO userDTO) {
-        currentUser = userDTO;
+       dbRemoteDataSource.setCurrentUser(userDTO);
+    }
+
+    @Override
+    public Single<List<PlanDTO>> getUserPlan(String userId) {
+        return dbLocalDataSource.getPlanMeals(userId);
+    }
+
+    @Override
+    public Completable addMealToPlan(PlanDTO planDTO) {
+        return dbLocalDataSource.addMealIntoPlan(planDTO);
+    }
+
+    @Override
+    public Completable deleteMealFromPlan(PlanDTO planDTO) {
+        return dbLocalDataSource.deleteMealFromPlan(planDTO);
+    }
+
+    @Override
+    @Nullable
+    public UserDTO getCurrentUser() {
+        return dbRemoteDataSource.getCurrentUser();
     }
 }

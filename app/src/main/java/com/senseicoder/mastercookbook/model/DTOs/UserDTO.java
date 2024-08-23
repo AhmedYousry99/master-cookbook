@@ -89,7 +89,7 @@ public class UserDTO {
     @NonNull
     @Override
     public String toString() {
-        return "displayName: " +
+        return  "UserID: " + id + ", displayName: " +
                 displayName +
                 ", email: " +
                 email +
