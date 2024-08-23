@@ -13,16 +13,30 @@
         <action
             android:id="@+id/action_HomeFragment_to_mealFragment"
             app:destination="@id/mealFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/HomeFragment"
-            app:popUpToInclusive="true"
-            />
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
         android:id="@+id/SearchFragment"
         android:name="com.senseicoder.mastercookbook.features.main.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_SearchFragment_to_searchDetailedFragment"
+            app:destination="@id/searchDetailedFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/SearchFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/FavoriteFragment"
@@ -47,5 +61,14 @@
         <argument
             android:name="mealId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchDetailedFragment"
+        android:name="com.senseicoder.mastercookbook.features.search_detailed.SearchDetailedFragment"
+        android:label="@string/search_detailed_fragment"
+        tools:layout="@layout/fragment_search_detailed">
+        <argument
+            android:name="searchType"
+            app:argType="com.senseicoder.mastercookbook.util.enums.SearchType" />
     </fragment>
 </navigation>
