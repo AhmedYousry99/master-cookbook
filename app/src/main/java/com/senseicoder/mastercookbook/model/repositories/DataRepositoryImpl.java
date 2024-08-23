@@ -54,13 +54,6 @@ public class DataRepositoryImpl implements DataRepository {
     }
 
     @Override
-    @Nullable
-    public UserDTO getCurrentUser() {
-        currentUser = dbRemoteDataSource.getCurrentUser();
-        return currentUser;
-    }
-
-    @Override
     public Single<List<CategoryDTO>> getCategories() {
         Single<List<CategoryDTO>> temp = foodRemoteDataSource.getCategories();
         return temp;
