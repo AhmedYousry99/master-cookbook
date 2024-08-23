@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.senseicoder.mastercookbook.R;
+import com.senseicoder.mastercookbook.db.local.RoomLocalDateSourceImpl;
 import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.firebase.FirebaseAuthRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.features.main.MainActivity;
@@ -71,7 +72,8 @@ public class InitialActivity extends AppCompatActivity implements InitialView {
                 ),
                 DataRepositoryImpl.getInstance(
                         FirebaseFirestoreRemoteDataSourceImpl.getInstance(),
-                        RetrofitRemoteDataSourceImpl.getInstance(getCacheDir())
+                        RetrofitRemoteDataSourceImpl.getInstance(getCacheDir()),
+                        RoomLocalDateSourceImpl.getInstance(this)
                 ),
                 this
         );

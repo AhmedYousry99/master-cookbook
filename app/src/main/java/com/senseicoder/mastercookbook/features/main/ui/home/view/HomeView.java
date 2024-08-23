@@ -14,6 +14,10 @@ public interface HomeView {
 
     void updateMealsYouMightLikeList(List<MealDTO> meals);
 
-    void handleError(String message);
+    void onMealRemovedSuccess();
+
+    void onMealAddedSuccess();
+
+    void handleError(Throwable e);
 
 }

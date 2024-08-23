@@ -39,7 +39,7 @@ public class SearchDetailedAdapter extends RecyclerView.Adapter<SearchDetailedAd
     public void onBindViewHolder(@NonNull SearchDetailedViewHolder holder, int position) {
         MealSimplifiedModel meal = meals.get(position);
         holder.getSearchDetailedListTileTitle().setText(meal.getTitle());
-        Glide.with(context).load(meal.getThumbnail()).placeholder(R.drawable.food_photo).into(holder.getSearchDetailedListTileImageView());
+        Glide.with(context).load(meal.getThumbnailUrl()).placeholder(R.drawable.food_photo).into(holder.getSearchDetailedListTileImageView());
     }
 
     public void updateList(List<MealSimplifiedModel> meals){

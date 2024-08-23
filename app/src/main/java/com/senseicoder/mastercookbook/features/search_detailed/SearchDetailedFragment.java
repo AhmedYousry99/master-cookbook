@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.senseicoder.mastercookbook.R;
+import com.senseicoder.mastercookbook.db.local.RoomLocalDateSourceImpl;
 import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.features.search_detailed.adapters.SearchDetailedAdapter;
 import com.senseicoder.mastercookbook.features.search_detailed.presenter.SearchDetailedPresenter;
@@ -97,7 +98,8 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
         presenter = new SearchDetailedPresenterImpl(
                 DataRepositoryImpl.getInstance(
                         FirebaseFirestoreRemoteDataSourceImpl.getInstance(),
-                        RetrofitRemoteDataSourceImpl.getInstance(getActivity().getCacheDir())
+                        RetrofitRemoteDataSourceImpl.getInstance(getActivity().getCacheDir()),
+                        RoomLocalDateSourceImpl.getInstance(getContext())
                 ),
                 this
         );

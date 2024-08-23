@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.senseicoder.mastercookbook.R;
+import com.senseicoder.mastercookbook.db.local.RoomLocalDateSourceImpl;
 import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.features.main.ui.home.HomeFragmentDirections;
 import com.senseicoder.mastercookbook.features.meal.adapters.MealDetailsIngredientsRecyclerAdapter;
@@ -71,7 +72,8 @@ public class MealFragment extends Fragment implements MealView {
         mealProgressBar = view.findViewById(R.id.mealProgressBar);
         presenter = new MealPresenterImpl(DataRepositoryImpl.getInstance(
                 FirebaseFirestoreRemoteDataSourceImpl.getInstance(),
-                RetrofitRemoteDataSourceImpl.getInstance(getActivity().getCacheDir())
+                RetrofitRemoteDataSourceImpl.getInstance(getActivity().getCacheDir()),
+                RoomLocalDateSourceImpl.getInstance(getContext())
         ),this);
         presenter.getMealData(mealId);
     }

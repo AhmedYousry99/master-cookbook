@@ -43,10 +43,9 @@ public class MoreYouMightLikeRecyclerAdapter extends  RecyclerView.Adapter<MoreY
     @Override
     public void onBindViewHolder(@NonNull MoreYouMightLikeViewHolder holder, int position) {
         MealDTO meal = meals.get(position);
-        holder
-                .getTitleTextView()
-                .setText(meal.getTitle());
-        holder.setupListeners(meal.getId());
+        holder.getTitleTextView().setText(meal.getTitle());
+        holder.setupListeners(meal);
+        holder.getFavoriteButton().setImageResource(meal.isFavorite() ? R.drawable.favorite_filled_ic : R.drawable.favorite_ic);
         Log.d(TAG, "onBindViewHolder: " + position);
         Glide.with(context).load(meal.getThumbnail()).placeholder(R.drawable.food_photo).into(holder.getBackgroundImageView());
     }
@@ -74,12 +73,12 @@ class MoreYouMightLikeViewHolder extends RecyclerView.ViewHolder{
         this.listener = listener;
     }
 
-    public void setupListeners(String userId) {
+    public void setupListeners(MealDTO meal) {
         favoriteButton.setOnClickListener(
-                v -> listener.onFavoriteClicked(userId)
+                v -> listener.onFavoriteClicked(meal)
         );
         checkIngredientsButton.setOnClickListener(
-                v -> listener.onCheckIngredientsClicked(userId)
+                v -> listener.onCheckIngredientsClicked(meal.getId())
         );
     }
 

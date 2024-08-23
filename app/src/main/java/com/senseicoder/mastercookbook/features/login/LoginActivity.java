@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.senseicoder.mastercookbook.R;
+import com.senseicoder.mastercookbook.db.local.RoomLocalDateSourceImpl;
 import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.features.login.presenter.LoginPresenter;
 import com.senseicoder.mastercookbook.features.login.presenter.LoginPresenterImpl;
@@ -52,7 +53,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         ),
                 DataRepositoryImpl.getInstance(
                         FirebaseFirestoreRemoteDataSourceImpl.getInstance(),
-                        RetrofitRemoteDataSourceImpl.getInstance(getCacheDir())
+                        RetrofitRemoteDataSourceImpl.getInstance(getCacheDir()),
+                        RoomLocalDateSourceImpl.getInstance(this)
                 ));
         setUpListeners();
     }

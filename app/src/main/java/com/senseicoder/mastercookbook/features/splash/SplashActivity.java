@@ -10,6 +10,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.senseicoder.mastercookbook.R;
+import com.senseicoder.mastercookbook.db.local.RoomLocalDateSourceImpl;
 import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.features.initial.InitialActivity;
 import com.senseicoder.mastercookbook.features.main.MainActivity;
@@ -35,7 +36,8 @@ public class SplashActivity extends AppCompatActivity implements SplashActivityV
         splashActivityPresenter = new SplashActivityPresenter(
                 this, DataRepositoryImpl.getInstance(
                 FirebaseFirestoreRemoteDataSourceImpl.getInstance(),
-                RetrofitRemoteDataSourceImpl.getInstance(getCacheDir())
+                RetrofitRemoteDataSourceImpl.getInstance(getCacheDir()),
+                RoomLocalDateSourceImpl.getInstance(this)
         )
         );
         retryConfirmationDialog = new ConfirmationDialog(

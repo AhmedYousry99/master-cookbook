@@ -54,7 +54,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             {
                 MainHeaderViewHolder viewHolder = new MainHeaderViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_home_list_header, viewGroup, false));
                 viewHolder.getCardCheckIngredientsButton().setOnClickListener(v -> listener.onCheckIngredientsClicked(items.get(MAIN_HEADER).getMeal().getId()));
-                viewHolder.getCardFavoriteButton().setOnClickListener(v -> listener.onFavoriteClicked(items.get(MAIN_HEADER).getMeal().getId()));
+                viewHolder.getCardFavoriteButton().setOnClickListener(v -> listener.onFavoriteClicked(items.get(MAIN_HEADER).getMeal()));
                 Log.d(TAG, "onCreateViewHolder: MAIN_HEADER" );
                 return viewHolder;
             }
@@ -85,6 +85,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             MainHeaderViewHolder currentHolder = (MainHeaderViewHolder) holder;
             currentHolder.getCardTitleTextView().setText(meal.getTitle());
             Glide.with(context).load(meal.getThumbnail()).placeholder(R.drawable.food_photo).into(currentHolder.getHomeListTIleCardBackgroundImageView());
+            currentHolder.getCardFavoriteButton().setImageResource(meal.isFavorite() ? R.drawable.favorite_filled_ic : R.drawable.favorite_ic);
             Log.d(TAG, "onCreateViewHolder: MAIN_HEADER" );
         } else if (holder instanceof SecondaryHeaderViewHolder){
             SecondaryHeaderViewHolder currentHolder = (SecondaryHeaderViewHolder) holder;

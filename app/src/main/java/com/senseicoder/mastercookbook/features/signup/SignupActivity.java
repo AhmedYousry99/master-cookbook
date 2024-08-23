@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.senseicoder.mastercookbook.R;
+import com.senseicoder.mastercookbook.db.local.RoomLocalDateSourceImpl;
 import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.features.signup.presenter.SignupPresenter;
 import com.senseicoder.mastercookbook.features.signup.presenter.SignupPresenterImpl;
@@ -57,7 +58,8 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
         ),
                 DataRepositoryImpl.getInstance(
                         FirebaseFirestoreRemoteDataSourceImpl.getInstance(),
-                        RetrofitRemoteDataSourceImpl.getInstance(getCacheDir())
+                        RetrofitRemoteDataSourceImpl.getInstance(getCacheDir()),
+                        RoomLocalDateSourceImpl.getInstance(this)
                 ));
         setupListeners();
     }
