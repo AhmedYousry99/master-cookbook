@@ -7,14 +7,14 @@ public class IngredientDTO {
     @SerializedName(MealKeys.ID_INGREDIENT)
     private String id;
     @SerializedName(MealKeys.STR_INGREDIENT)
-    private String ingredient;
+    private String title;
     @SerializedName(MealKeys.STR_DESCRIPTION)
     private String description;
 
 
-    public IngredientDTO(String id, String ingredient, String description) {
+    public IngredientDTO(String id, String title, String description) {
         this.id = id;
-        this.ingredient = ingredient;
+        this.title = title;
         this.description = description;
     }
 
@@ -26,12 +26,12 @@ public class IngredientDTO {
         this.id = id;
     }
 
-    public String getIngredient() {
-        return ingredient;
+    public String getTitle() {
+        return title;
     }
 
-    public void setIngredient(String ingredient) {
-        this.ingredient = ingredient;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
