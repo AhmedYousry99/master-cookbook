@@ -10,12 +10,9 @@ import com.senseicoder.mastercookbook.model.DTOs.CountryDTO;
 import com.senseicoder.mastercookbook.model.DTOs.IngredientDTO;
 import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
 import com.senseicoder.mastercookbook.model.DTOs.UserDTO;
-import com.senseicoder.mastercookbook.model.responses.GetCategoriesResponse;
-import com.senseicoder.mastercookbook.model.responses.GetCountriesResponse;
-import com.senseicoder.mastercookbook.model.responses.GetIngredientsResponse;
-import com.senseicoder.mastercookbook.model.responses.GetMealsResponse;
 import com.senseicoder.mastercookbook.network.FoodRemoteDataSource;
 import com.senseicoder.mastercookbook.util.callbacks.DatabaseCallback;
+import com.senseicoder.mastercookbook.util.enums.SearchType;
 
 import java.util.List;
 
@@ -65,38 +62,49 @@ public class DataRepositoryImpl implements DataRepository {
 
     @Override
     public Single<List<CategoryDTO>> getCategories() {
-        Single<List<CategoryDTO>> temp = foodRemoteDataSource.getCategories().map(
-                GetCategoriesResponse::getCategories
-        );
+        Single<List<CategoryDTO>> temp = foodRemoteDataSource.getCategories();
         return temp;
     }
 
     @Override
     public Single<List<CountryDTO>> getCountries() {
-        Single<List<CountryDTO>> temp = foodRemoteDataSource.getCountries().map(
-                GetCountriesResponse::getCountry
-        );
+        Single<List<CountryDTO>> temp = foodRemoteDataSource.getCountries();
         return temp;
     }
 
     @Override
     public Single<List<IngredientDTO>> getIngredients() {
-        return foodRemoteDataSource.getIngredients().map(GetIngredientsResponse::getIngredient);
+        return foodRemoteDataSource.getIngredients();
     }
 
     @Override
     public Single<MealDTO> getMealDetailsById(String mealId) {
-        return foodRemoteDataSource.getMealDetails(mealId).map(getMealDataResponse -> getMealDataResponse.getMeals().get(0));
+        return foodRemoteDataSource.getMealDetails(mealId);
     }
 
     @Override
     public Single<List<MealDTO>> getMealsYouMightLike(String letter) {
-        return foodRemoteDataSource.getMoreYouMightLike(letter).map(GetMealsResponse::getMeals);
+        return foodRemoteDataSource.getMoreYouMightLike(letter);
     }
 
     @Override
     public Single<List<MealDTO>> getMealOfTheDay() {
-        return foodRemoteDataSource.getMealOfTheDay().map(GetMealsResponse::getMeals);
+        return foodRemoteDataSource.getMealOfTheDay();
+    }
+
+    @Override
+    public Single<List<MealDTO>> searchMeal(String word, SearchType type) {
+        switch (type){
+            case Name:
+                return foodRemoteDataSource.getMealsByLetters(word);
+            case Country:
+                return foodRemoteDataSource.getMealsByCountry(word);
+            case Category:
+                return foodRemoteDataSource.getMealsByCategory(word);
+            case Ingredient:
+                return foodRemoteDataSource.getMealsByIngredient(word);
+        }
+        return null;
     }
 
     @Override

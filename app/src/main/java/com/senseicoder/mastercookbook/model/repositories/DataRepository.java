@@ -8,6 +8,7 @@ import com.senseicoder.mastercookbook.model.DTOs.IngredientDTO;
 import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
 import com.senseicoder.mastercookbook.model.DTOs.UserDTO;
 import com.senseicoder.mastercookbook.util.callbacks.DatabaseCallback;
+import com.senseicoder.mastercookbook.util.enums.SearchType;
 
 import java.util.List;
 
@@ -21,7 +22,6 @@ public interface DataRepository {
 
     void getUserByIdOrAddUser(UserDTO userDTO, GetUserByIdOrAddUserCallback callback);
 
-    UserDTO getCurrentUser();
 
     Single<List<CategoryDTO>> getCategories();
 
@@ -35,5 +35,8 @@ public interface DataRepository {
 
     Single<List<MealDTO>> getMealOfTheDay();
 
+    Single<List<MealDTO>> searchMeal(String word, SearchType type);
+
     void setCurrentUser(UserDTO userDTO);
+
 }
