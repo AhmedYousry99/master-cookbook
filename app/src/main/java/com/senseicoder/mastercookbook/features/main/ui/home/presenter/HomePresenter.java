@@ -6,10 +6,10 @@ public interface HomePresenter {
 
     void getCategories();
 
-    void getIngredients();
-
     void getMealsYouMightLike(String letter);
 
     void getMealOfTheDay();
+
+    void clear();
 
 }
