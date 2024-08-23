@@ -60,6 +60,7 @@ dependencies {
     implementation (libs.adapter.rxjava3)
     implementation (libs.rxjava)
     implementation (libs.rxandroid)
+    implementation(libs.room.rxjava3)
 
 
     implementation (libs.glide)
