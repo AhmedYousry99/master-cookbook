@@ -16,11 +16,11 @@ import com.senseicoder.mastercookbook.util.global.Constants;
 
 import java.util.List;
 
-public class MealDetailsIngredientsRecyclerAdapter extends RecyclerView.Adapter<IngredientViewHolder>{
+public class ingredientsAdapter extends RecyclerView.Adapter<IngredientViewHolder>{
 
     List<String> ingredients;
     Context context;
-    public MealDetailsIngredientsRecyclerAdapter(List<String> ingredients, Context context) {
+    public ingredientsAdapter(List<String> ingredients, Context context) {
         this.ingredients = ingredients;
         this.context = context;
     }
