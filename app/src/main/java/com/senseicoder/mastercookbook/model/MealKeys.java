@@ -64,4 +64,6 @@ public final class MealKeys {
     public static final String STR_SOURCE = "strSource";
     public static final String FAVORITE_SYNCED = "favoriteSynced";
     public static final String DAY = "day";
+    public static final String FAVORITE = "favorite";
+    public static final String SUGGESTIONS = "suggestions";
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.senseicoder.mastercookbook.R;
 import com.senseicoder.mastercookbook.features.main.ui.home.listeners.nestedRecyclerViewItemListeners;
 import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
+import com.senseicoder.mastercookbook.model.DTOs.PlanDTO;
 
 import java.util.List;
 
@@ -62,14 +64,16 @@ class MoreYouMightLikeViewHolder extends RecyclerView.ViewHolder{
     private final ImageView backgroundImageView;
     private final TextView titleTextView;
     private final Button checkIngredientsButton;
+    private final ImageView bookmarkButton;
     private final nestedRecyclerViewItemListeners listener;
 
     public MoreYouMightLikeViewHolder(@NonNull View itemView, nestedRecyclerViewItemListeners listener) {
         super(itemView);
-        favoriteButton = itemView.findViewById(R.id.homeListTileCardFavoriteButton);
-        backgroundImageView = itemView.findViewById(R.id.smallListTileImageView);
-        titleTextView = itemView.findViewById(R.id.homeListTilecardTitleTextView);
-        checkIngredientsButton = itemView.findViewById(R.id.homeListTilecardCheckIngredientsButton);
+        favoriteButton = itemView.findViewById(R.id.homeLargeListTileCardFavoriteButton);
+        backgroundImageView = itemView.findViewById(R.id.homeLargelListTileImageView);
+        titleTextView = itemView.findViewById(R.id.homeLargeListTilecardTitleTextView);
+        checkIngredientsButton = itemView.findViewById(R.id.homeLargeListTilecardCheckIngredientsButton);
+        bookmarkButton = itemView.findViewById(R.id.homeLargeListTileHeaderCardBookmarkButton);
         this.listener = listener;
     }
 
@@ -79,6 +83,9 @@ class MoreYouMightLikeViewHolder extends RecyclerView.ViewHolder{
         );
         checkIngredientsButton.setOnClickListener(
                 v -> listener.onCheckIngredientsClicked(meal.getId())
+        );
+        bookmarkButton.setOnClickListener(
+                v -> listener.onBookmarkClicked(meal)
         );
     }
 
@@ -96,5 +103,9 @@ class MoreYouMightLikeViewHolder extends RecyclerView.ViewHolder{
 
     public Button getCheckIngredientsButton() {
         return checkIngredientsButton;
+    }
+
+    public ImageView getBookmarkButton() {
+        return bookmarkButton;
     }
 }

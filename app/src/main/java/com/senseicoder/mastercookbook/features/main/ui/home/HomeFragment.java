@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,23 +28,31 @@ import com.senseicoder.mastercookbook.model.DTOs.CountryDTO;
 import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
 import com.senseicoder.mastercookbook.model.repositories.DataRepositoryImpl;
 import com.senseicoder.mastercookbook.network.RetrofitRemoteDataSourceImpl;
+import com.senseicoder.mastercookbook.util.dialogs.ChooseDayDialog;
+import com.senseicoder.mastercookbook.util.enums.SearchType;
+import com.senseicoder.mastercookbook.util.global.NetworkChangeObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeView, nestedRecyclerViewItemListeners{
+import io.reactivex.rxjava3.core.Observable;
 
-    private HomePresenter presenter;
+public class HomeFragment extends Fragment implements HomeView, nestedRecyclerViewItemListeners {
+
+    private static final String TAG = "HomeFragment";
+
     private RecyclerView mainRecyclerView;
     private ProgressBar circularProgressBar;
-    private ArrayList<HomeFragmentItem> list;
     private HomeRecyclerAdapter homeRecyclerAdapter;
+    private TextView connectivityText;
+    private ArrayList<HomeFragmentItem> list;
+
+    private MealDTO mealOfTheDay;
     private List<CategoryDTO> categories;
     private List<CountryDTO> countries;
     private List<MealDTO> mealsYouMightLike;
-    private MealDTO mealOfTheDay;
 
-    private static final String TAG = "HomeFragment";
+    private HomePresenter presenter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +71,7 @@ public class HomeFragment extends Fragment implements HomeView, nestedRecyclerVi
 
         mainRecyclerView = view.findViewById(R.id.mainRecyclerView);
         circularProgressBar = view.findViewById(R.id.homeCircularProgressBar);
+        connectivityText = view.findViewById(R.id.connectivityText);
 
         list = new ArrayList<>();
         categories = new ArrayList<>();
@@ -69,16 +79,14 @@ public class HomeFragment extends Fragment implements HomeView, nestedRecyclerVi
         mealsYouMightLike = new ArrayList<>();
         homeRecyclerAdapter = new HomeRecyclerAdapter(getContext(), list, this);
         mainRecyclerView.setAdapter(homeRecyclerAdapter);
-        presenter.getMealOfTheDay();
-        presenter.getCategories();
-        presenter.getMealsYouMightLike("s");
+
     }
 
 
     @Override
     public void updateCategoriesList(List<CategoryDTO> categories) {
         this.categories = categories;
-        if(mealOfTheDay!= null)
+        if (mealOfTheDay != null)
             setupHomeList();
     }
 
@@ -93,7 +101,7 @@ public class HomeFragment extends Fragment implements HomeView, nestedRecyclerVi
     @Override
     public void updateMealsYouMightLikeList(List<MealDTO> meals) {
         this.mealsYouMightLike = meals;
-        if(mealOfTheDay!= null)
+        if (mealOfTheDay != null)
             setupHomeList();
     }
 
@@ -110,6 +118,37 @@ public class HomeFragment extends Fragment implements HomeView, nestedRecyclerVi
     }
 
     @Override
+    public void showPermissionDenied() {
+        Toast.makeText(getContext(), getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Observable<Boolean> initiateNetworkObserver() {
+        return NetworkChangeObserver.observeNetworkConnectivity(getContext());
+    }
+
+    @Override
+    public void handleConnection(boolean connected) {
+        Log.d(TAG, "handleConnection: is: " + connected);
+        if (connected) {
+            mainRecyclerView.setVisibility(View.VISIBLE);
+            circularProgressBar.setVisibility(View.VISIBLE);
+            connectivityText.setVisibility(View.GONE);
+            if (mealOfTheDay == null)
+                presenter.getMealOfTheDay();
+            if (categories.isEmpty())
+                presenter.getCategories();
+            if (mealsYouMightLike.isEmpty())
+                presenter.getMealsYouMightLike("a");
+
+        } else {
+            mainRecyclerView.setVisibility(View.GONE);
+            circularProgressBar.setVisibility(View.INVISIBLE);
+            connectivityText.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public void handleError(Throwable e) {
         Log.e(TAG, "handleError: ", e);
         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -117,41 +156,72 @@ public class HomeFragment extends Fragment implements HomeView, nestedRecyclerVi
 
     @Override
     public void onCheckIngredientsClicked(String idMeal) {
-        HomeFragmentDirections.ActionHomeFragmentToMealFragment action =
-                HomeFragmentDirections.actionHomeFragmentToMealFragment(idMeal);
-        Navigation.findNavController(getView()).navigate(action);
+        if (NetworkChangeObserver.isConnected(getContext())) {
+            HomeFragmentDirections.ActionHomeFragmentToMealFragment action =
+                    HomeFragmentDirections.actionHomeFragmentToMealFragment(idMeal);
+            Navigation.findNavController(getView()).navigate(action);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.disconnected_text), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onFavoriteClicked(MealDTO meal) {
         Log.d(TAG, "onFavoriteClicked: " + meal.getTitle());
-        if(meal.isFavorite())
+        if (meal.isFavorite())
             presenter.deleteMealFromFavorite(meal);
-        else
-        {
+        else {
             presenter.addMealToFavorite(meal);
         }
     }
-    //TODO: create and use countries screen;
 
     @Override
     public void onGetMealsByCountryClicked(String country) {
-
+        if (NetworkChangeObserver.isConnected(getContext())) {
+            HomeFragmentDirections.ActionHomeFragmentToMealsFragment action =
+                    HomeFragmentDirections.actionHomeFragmentToMealsFragment(country, SearchType.Country);
+            Navigation.findNavController(getView()).navigate(action);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.disconnected_text), Toast.LENGTH_SHORT).show();
+        }
     }
-    //TODO: create and use categories screen;
 
     @Override
     public void onGetMealsByCategoryClicked(String category) {
+        if (NetworkChangeObserver.isConnected(getContext())) {
+            HomeFragmentDirections.ActionHomeFragmentToMealsFragment action =
+                    HomeFragmentDirections.actionHomeFragmentToMealsFragment(category, SearchType.Category);
+            Navigation.findNavController(getView()).navigate(action);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.disconnected_text), Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    @Override
+    public void onBookmarkClicked(MealDTO meal) {
+        ChooseDayDialog dialog = new ChooseDayDialog(getActivity());
+        dialog.getConfirmButton().setOnClickListener(
+                v -> {
+                    presenter.addMealToBookmark(meal, dialog.getSelectedDays());
+                    dialog.dismissDialog();
+                }
+        );
     }
 
     @Override
     public void onDestroy() {
+        Log.d(TAG, "onDestroy: ");
         super.onDestroy();
         presenter.clear();
     }
 
-    private void setupHomeList(){
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "onDetach: ");
+    }
+
+    private void setupHomeList() {
         list.clear();
         list.add(new HomeFragmentItem<>(HomeFragmentItem.MAIN_HEADER, null, 0, null, mealOfTheDay));
         list.add(new HomeFragmentItem<>(HomeFragmentItem.SECONDARY_HEADER, getString(R.string.countries_text), R.drawable.country_flag_ic, null, null));

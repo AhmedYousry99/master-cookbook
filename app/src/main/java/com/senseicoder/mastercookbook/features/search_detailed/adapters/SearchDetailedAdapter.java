@@ -8,23 +8,32 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.senseicoder.mastercookbook.R;
+import com.senseicoder.mastercookbook.features.search_detailed.listeners.SearchDetailedRecyclerListeners;
 import com.senseicoder.mastercookbook.model.DTOs.MealSimplifiedModel;
 
 import java.util.List;
 
 public class SearchDetailedAdapter extends RecyclerView.Adapter<SearchDetailedAdapter.SearchDetailedViewHolder>{
 
-    List<MealSimplifiedModel> meals;
-    Context context;
     private static final String TAG = "SearchDetailedAdapter";
 
-    public SearchDetailedAdapter(List<MealSimplifiedModel> list, Context context) {
+    List<MealSimplifiedModel> meals;
+    Context context;
+    SearchDetailedRecyclerListeners listeners;
+
+    public SearchDetailedAdapter(List<MealSimplifiedModel> list, Context context, SearchDetailedRecyclerListeners listeners) {
         this.meals = list;
         this.context = context;
+        this.listeners = listeners;
+    }
+
+    public List<MealSimplifiedModel> getMeals() {
+        return meals;
     }
 
     @NonNull
@@ -38,8 +47,12 @@ public class SearchDetailedAdapter extends RecyclerView.Adapter<SearchDetailedAd
     @Override
     public void onBindViewHolder(@NonNull SearchDetailedViewHolder holder, int position) {
         MealSimplifiedModel meal = meals.get(position);
-        holder.getSearchDetailedListTileTitle().setText(meal.getTitle());
-        Glide.with(context).load(meal.getThumbnailUrl()).placeholder(R.drawable.food_photo).into(holder.getSearchDetailedListTileImageView());
+        Log.d(TAG, "onBindViewHolder: " + meal);
+        holder.getTitle().setText(meal.getTitle());
+        holder.getCountry().setText(meal.getCountry());
+        holder.getCategory().setText(meal.getCategory());
+        holder.getCardView().setOnClickListener(v -> listeners.onItemClicked(meal.getId()));
+        Glide.with(context).load(meal.getThumbnailUrl()).placeholder(R.drawable.food_photo).into(holder.getImageView());
     }
 
     public void updateList(List<MealSimplifiedModel> meals){
@@ -53,22 +66,40 @@ public class SearchDetailedAdapter extends RecyclerView.Adapter<SearchDetailedAd
         return meals.size();
     }
 
-    class SearchDetailedViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView searchDetailedListTileImageView;
-        private final TextView searchDetailedListTileTitle;
+    static class SearchDetailedViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView imageView;
+        private final TextView title;
+        private final TextView country;
+        private final TextView category;
+        private final CardView cardView;
 
         public SearchDetailedViewHolder(@NonNull View itemView) {
             super(itemView);
-            searchDetailedListTileImageView = itemView.findViewById(R.id.searchDetailedListTileImageView);
-            searchDetailedListTileTitle = itemView.findViewById(R.id.searchDetailedListTileTitle);
+            imageView = itemView.findViewById(R.id.searchDetailedListTileImageView);
+            title = itemView.findViewById(R.id.searchDetailedListTileTitle);
+            category = itemView.findViewById(R.id.searchDetailedListTileCategory);
+            country = itemView.findViewById(R.id.searchDetailedListTileCountry);
+            cardView = itemView.findViewById(R.id.searchDetailedCardView);
         }
 
-        public ImageView getSearchDetailedListTileImageView() {
-            return searchDetailedListTileImageView;
+        public ImageView getImageView() {
+            return imageView;
         }
 
-        public TextView getSearchDetailedListTileTitle() {
-            return searchDetailedListTileTitle;
+        public TextView getTitle() {
+            return title;
+        }
+
+        public TextView getCountry() {
+            return country;
+        }
+
+        public TextView getCategory() {
+            return category;
+        }
+
+        public CardView getCardView() {
+            return cardView;
         }
     }
 

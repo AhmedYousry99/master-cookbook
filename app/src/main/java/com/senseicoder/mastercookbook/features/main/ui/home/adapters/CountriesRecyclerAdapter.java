@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -37,7 +36,7 @@ public class CountriesRecyclerAdapter extends RecyclerView.Adapter<CountriesView
     @NonNull
     @Override
     public CountriesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-         CountriesViewHolder viewHolder = new CountriesViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_tile_small, viewGroup, false));
+         CountriesViewHolder viewHolder = new CountriesViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_country_list_tile_small, viewGroup, false));
         return viewHolder;
 
     }
@@ -45,7 +44,6 @@ public class CountriesRecyclerAdapter extends RecyclerView.Adapter<CountriesView
     @Override
     public void onBindViewHolder(@NonNull CountriesViewHolder holder, int position) {
         CountryDTO country = countries.get(position);
-        holder.getTitle().setText(country.getName());
         holder.getCardView().setOnClickListener(v -> listener.onGetMealsByCountryClicked(country.getName()));
         Log.d(TAG, "onBindViewHolder: resource ID:" + country.getCountryFlag());
         Glide.with(context).load(country.getCountryFlag()).override(200, 200).into(holder.getBackgroundImage());
@@ -59,20 +57,15 @@ public class CountriesRecyclerAdapter extends RecyclerView.Adapter<CountriesView
 
 
 class CountriesViewHolder extends RecyclerView.ViewHolder{
-    private final TextView title;
     private final ImageView backgroundImage;
     private final CardView cardView;
 
     public CountriesViewHolder(@NonNull View itemView) {
         super(itemView);
-        this.title = itemView.findViewById(R.id.smallListTitleTextView);
-        this.cardView = itemView.findViewById(R.id.smallListCardView);
-        this.backgroundImage = itemView.findViewById(R.id.smallListTileImageView);
+        this.cardView = itemView.findViewById(R.id.homeCountrySmallListCardView);
+        this.backgroundImage = itemView.findViewById(R.id.homeCountrySmallListTileImageView);
     }
 
-    public TextView getTitle() {
-        return title;
-    }
 
     public ImageView getBackgroundImage() {
         return backgroundImage;

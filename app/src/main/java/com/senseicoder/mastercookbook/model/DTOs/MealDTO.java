@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -108,6 +109,7 @@ public class MealDTO {
     @SerializedName(MealKeys.STR_SOURCE)
     private String source;
     private boolean favorite;
+    private boolean plan;
 
 
     public MealDTO(String title) {
@@ -163,6 +165,7 @@ public class MealDTO {
         this.measure19 = measure19;
         this.measure20 = measure20;
         favorite = false;
+        plan = false;
     }
 
     public List<String> getIngredients() {
@@ -256,5 +259,36 @@ public class MealDTO {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if(o instanceof MealDTO) {
+            MealDTO mealDTO = (MealDTO) o;
+            return mealDTO.id.equals(id);
+        }
+        else if(o instanceof MealSimplifiedModel){
+            MealSimplifiedModel meal = (MealSimplifiedModel) o;
+            return meal.getId().equals(id);
+        }
+        else if(o instanceof PlanDTO){
+            PlanDTO plan = (PlanDTO) o;
+            return plan.getId().equals(id);
+        }
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    public void setPlan(boolean plan) {
+        this.plan = plan;
+    }
+
+    public boolean isPlan() {
+        return plan;
     }
 }

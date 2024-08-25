@@ -55,6 +55,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 MainHeaderViewHolder viewHolder = new MainHeaderViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_home_list_header, viewGroup, false));
                 viewHolder.getCardCheckIngredientsButton().setOnClickListener(v -> listener.onCheckIngredientsClicked(items.get(MAIN_HEADER).getMeal().getId()));
                 viewHolder.getCardFavoriteButton().setOnClickListener(v -> listener.onFavoriteClicked(items.get(MAIN_HEADER).getMeal()));
+                viewHolder.getBookmarkButton().setOnClickListener(v -> listener.onBookmarkClicked(items.get(MAIN_HEADER).getMeal()));
                 Log.d(TAG, "onCreateViewHolder: MAIN_HEADER" );
                 return viewHolder;
             }
@@ -140,21 +141,23 @@ abstract class BaseViewHolder extends RecyclerView.ViewHolder{
 }
 
 class MainHeaderViewHolder extends  BaseViewHolder{
-    private ImageView homeListTilecardBackgroundImageView;
+    private ImageView backgroundImageView;
     private ImageButton cardFavoriteButton;
     private Button cardCheckIngredientsButton;
     private TextView cardTitleTextView;
+    private ImageView bookmarkButton;
 
     public MainHeaderViewHolder(@NonNull View itemView) {
         super(itemView);
-        this.homeListTilecardBackgroundImageView = itemView.findViewById(R.id.smallListTileImageView);
-        cardFavoriteButton = itemView.findViewById(R.id.cardFavoriteButton);
-        cardCheckIngredientsButton = itemView.findViewById(R.id.cardCheckIngredientsButton);
-        cardTitleTextView = itemView.findViewById(R.id.cardTitleTextView);
+        this.backgroundImageView = itemView.findViewById(R.id.homeHeaderImageView);
+        cardFavoriteButton = itemView.findViewById(R.id.homeHeaderCardFavoriteButton);
+        cardCheckIngredientsButton = itemView.findViewById(R.id.homeHeaderCardCheckIngredientsButton);
+        cardTitleTextView = itemView.findViewById(R.id.homeHeaderCardTitleTextView);
+        bookmarkButton = itemView.findViewById(R.id.homeHeaderCardBookmarkButton);
     }
 
     public ImageView getHomeListTIleCardBackgroundImageView() {
-        return homeListTilecardBackgroundImageView;
+        return backgroundImageView;
     }
 
     public ImageButton getCardFavoriteButton() {
@@ -167,6 +170,10 @@ class MainHeaderViewHolder extends  BaseViewHolder{
 
     public TextView getCardTitleTextView() {
         return cardTitleTextView;
+    }
+
+    public ImageView getBookmarkButton() {
+        return bookmarkButton;
     }
 }
 

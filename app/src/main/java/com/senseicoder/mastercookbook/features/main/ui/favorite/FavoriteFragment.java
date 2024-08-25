@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,13 +24,15 @@ import com.senseicoder.mastercookbook.features.main.ui.favorite.listeners.Favori
 import com.senseicoder.mastercookbook.features.main.ui.favorite.presenter.FavoritePresenter;
 import com.senseicoder.mastercookbook.features.main.ui.favorite.presenter.FavoritePresenterImpl;
 import com.senseicoder.mastercookbook.features.main.ui.favorite.view.FavoriteView;
-import com.senseicoder.mastercookbook.model.DTOs.MealDTO;
 import com.senseicoder.mastercookbook.model.DTOs.MealSimplifiedModel;
 import com.senseicoder.mastercookbook.model.repositories.DataRepositoryImpl;
 import com.senseicoder.mastercookbook.network.RetrofitRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.util.dialogs.ConfirmationDialog;
+import com.senseicoder.mastercookbook.util.global.NetworkChangeObserver;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public class FavoriteFragment extends Fragment implements FavoriteView, FavoriteRecyclerViewListeners {
 
@@ -39,6 +42,10 @@ public class FavoriteFragment extends Fragment implements FavoriteView, Favorite
     private FavoriteRecyclerAdapter favoriteRecyclerAdapter;
     private TextView favoriteListEmptyText;
     private ConfirmationDialog confirmationDialog;
+    private boolean synced;
+
+    List<MealSimplifiedModel> meals;
+
 
     private static final String TAG = "FavoriteFragment";
 
@@ -62,15 +69,21 @@ public class FavoriteFragment extends Fragment implements FavoriteView, Favorite
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         favoriteRecyclerView.setLayoutManager(layoutManager);
-        presenter.getFavorites();
+        if(meals == null)
+            presenter.getFavorites();
+        else{
+            updateList(meals);
+        }
     }
 
     @Override
     public void updateList(List<MealSimplifiedModel> meals) {
+        Log.d(TAG, "updateList: ");
         favoriteRecyclerAdapter = new FavoriteRecyclerAdapter(meals, getContext(), this);
         favoriteRecyclerView.setAdapter(favoriteRecyclerAdapter);
         favoriteProgressBar.setVisibility(View.GONE);
         favoriteRecyclerView.setVisibility(View.VISIBLE);
+        this.meals = meals;
         if(meals.isEmpty())
             favoriteListEmptyText.setVisibility(View.VISIBLE);
         else
@@ -78,24 +91,16 @@ public class FavoriteFragment extends Fragment implements FavoriteView, Favorite
     }
 
     @Override
-    public void onGetMealDataSuccess(MealDTO meal) {
-        Toast.makeText(getContext(), "meal "+ meal.getTitle() + " added", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onMealDeletedSuccess() {
-        favoriteRecyclerAdapter.notifyDataSetChanged();
+    public void onMealDeletedSuccess(MealSimplifiedModel meal) {
+        favoriteRecyclerAdapter.UpdateDeletedMeal(meal);
+        if(favoriteRecyclerAdapter.getMeals().isEmpty())
+            favoriteListEmptyText.setVisibility(View.VISIBLE);
         Toast.makeText(getContext(), "deleted successfully", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onFailure(Throwable e) {
         Log.e(TAG, "onFailure: ", e);
-    }
-
-    @Override
-    public void onMealAddedSuccess() {
-        Toast.makeText(getContext(), "added successfully", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -110,12 +115,33 @@ public class FavoriteFragment extends Fragment implements FavoriteView, Favorite
 
     @Override
     public void onCheckIngredientsClicked(MealSimplifiedModel meal) {
-        presenter.getMealData(meal);
+        if(NetworkChangeObserver.isConnected(getContext())){
+            FavoriteFragmentDirections.ActionFavoriteFragmentToMealFragment action =
+                    FavoriteFragmentDirections.actionFavoriteFragmentToMealFragment(meal.getId());
+            Navigation.findNavController(getView()).navigate(action);
+        }else
+            Toast.makeText(getContext(), getString(R.string.disconnected_text), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.clear();
+    }
+
+    @Override
+    public Observable<Boolean> initiateNetworkObserver() {
+        return NetworkChangeObserver.observeNetworkConnectivity(getContext());
+    }
+
+    @Override
+    public void handleConnection(boolean connected) {
+        synced = connected;
+    }
+
+    @Override
+    public void handleError(Throwable e) {
+        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

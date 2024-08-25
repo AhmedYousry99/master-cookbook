@@ -9,7 +9,5 @@ public interface FavoritePresenter {
 
     void deleteMeal(MealSimplifiedModel meal);
 
-    void getMealData(MealSimplifiedModel meal);
-
     void clear();
 }

@@ -1,4 +1,4 @@
-package com.senseicoder.mastercookbook.firebase;
+package com.senseicoder.mastercookbook.authentication;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
@@ -133,6 +133,11 @@ public class FirebaseAuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             isLoggedIn = false;
         }
         return isLoggedIn;
+    }
+
+    @Override
+    public boolean isUserGuest() {
+        return firebaseAuthInstance.getCurrentUser().isAnonymous();
     }
 
 }

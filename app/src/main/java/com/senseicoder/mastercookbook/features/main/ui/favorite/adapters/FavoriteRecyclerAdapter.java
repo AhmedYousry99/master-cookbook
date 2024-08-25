@@ -1,6 +1,7 @@
 package com.senseicoder.mastercookbook.features.main.ui.favorite.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,12 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteViewHo
     Context context;
     FavoriteRecyclerViewListeners listeners;
 
+    private static final String TAG = "FavoriteRecyclerAdapter";
+
+    public List<MealSimplifiedModel> getMeals() {
+        return meals;
+    }
+
     public FavoriteRecyclerAdapter(List<MealSimplifiedModel> meals, Context context, FavoriteRecyclerViewListeners listeners) {
         this.meals = meals;
         this.context = context;
@@ -36,13 +43,19 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteViewHo
         return favoriteViewHolder;
     }
 
+    public void UpdateDeletedMeal(MealSimplifiedModel meal){
+        meals.remove(meal);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
         MealSimplifiedModel meal = meals.get(position);
+        Log.d(TAG, "onBindViewHolder: " + meal);
         holder.
                 getFavoriteButton().
                 setOnClickListener(v -> listeners.onFavoriteClicked(meal));
-        holder.getCheckIngredientsButton().setOnClickListener(v -> listeners.onFavoriteClicked(meal));
+        holder.getCheckIngredientsButton().setOnClickListener(v -> listeners.onCheckIngredientsClicked(meal));
         holder.getTitleTextView().setText(meal.getTitle());
         Glide.with(context).load(meal.getThumbnailUrl()).placeholder(R.drawable.food_photo).into(holder.getBackgroundImageView());
     }

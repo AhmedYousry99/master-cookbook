@@ -19,7 +19,7 @@ import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourc
 import com.senseicoder.mastercookbook.features.signup.presenter.SignupPresenter;
 import com.senseicoder.mastercookbook.features.signup.presenter.SignupPresenterImpl;
 import com.senseicoder.mastercookbook.features.signup.view.SignupView;
-import com.senseicoder.mastercookbook.firebase.FirebaseAuthRemoteDataSourceImpl;
+import com.senseicoder.mastercookbook.authentication.FirebaseAuthRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.model.DTOs.UserDTO;
 import com.senseicoder.mastercookbook.model.repositories.AuthenticationRepositoryImpl;
 import com.senseicoder.mastercookbook.model.repositories.DataRepositoryImpl;

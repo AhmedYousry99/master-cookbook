@@ -1,4 +1,4 @@
-package com.senseicoder.mastercookbook.firebase;
+package com.senseicoder.mastercookbook.authentication;
 
 import com.senseicoder.mastercookbook.model.DTOs.UserDTO;
 import com.senseicoder.mastercookbook.util.callbacks.LoginAuthCallback;
@@ -20,4 +20,5 @@ public interface AuthRemoteDataSource {
 
     public boolean isUserLoggedIn();
 
+    boolean isUserGuest();
 }

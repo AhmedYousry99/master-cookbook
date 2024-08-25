@@ -7,4 +7,6 @@ public interface nestedRecyclerViewItemListeners {
     void onFavoriteClicked(MealDTO mealDTO);
     void onGetMealsByCountryClicked(String country);
     void onGetMealsByCategoryClicked(String category);
+
+    void onBookmarkClicked(MealDTO meal);
 }

@@ -1,7 +1,7 @@
 package com.senseicoder.mastercookbook.model.repositories;
 
 import com.senseicoder.mastercookbook.util.callbacks.LoginAuthCallback;
-import com.senseicoder.mastercookbook.firebase.AuthRemoteDataSource;
+import com.senseicoder.mastercookbook.authentication.AuthRemoteDataSource;
 import com.senseicoder.mastercookbook.model.DTOs.UserDTO;
 import com.senseicoder.mastercookbook.util.callbacks.SignupAuthCallback;
 
@@ -52,6 +52,16 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
     @Override
     public void loginUsingGuest(LoginAuthCallback firebaseAuthCallback) {
         authRemoteDataSource.loginUsingGuest(firebaseAuthCallback);
+    }
+
+    @Override
+    public boolean isUserGuest() {
+        return authRemoteDataSource.isUserGuest();
+    }
+
+    @Override
+    public void signOut() {
+        authRemoteDataSource.signOut();
     }
 
 }

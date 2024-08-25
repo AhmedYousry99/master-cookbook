@@ -34,6 +34,9 @@ public interface FoodDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertMealInPlan(PlanDTO plan);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertMultipleMealsIntoPlan(List<PlanDTO> plans);
+
     @Delete
     Completable deleteMealFromPlan(PlanDTO plan);
 }

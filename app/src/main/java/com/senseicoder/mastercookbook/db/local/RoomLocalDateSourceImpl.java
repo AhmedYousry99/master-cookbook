@@ -50,17 +50,22 @@ public class RoomLocalDateSourceImpl implements DBLocalDataSource {
 
     @Override
     public Single<List<PlanDTO>> getPlanMeals(String userId) {
-        return foodDao.getPlanMeals(userId);
+        return foodDao.getPlanMeals(userId).subscribeOn(Schedulers.io());
     }
 
     @Override
     public Completable addMealIntoPlan(PlanDTO plan) {
-        return foodDao.insertMealInPlan(plan);
+        return foodDao.insertMealInPlan(plan).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable addMealToMultipleDaysInPlan(List<PlanDTO> plans) {
+        return foodDao.insertMultipleMealsIntoPlan(plans).subscribeOn(Schedulers.io());
     }
 
     @Override
     public Completable deleteMealFromPlan(PlanDTO plan) {
-        return foodDao.deleteMealFromPlan(plan);
+        return foodDao.deleteMealFromPlan(plan).subscribeOn(Schedulers.io());
     }
 
 }

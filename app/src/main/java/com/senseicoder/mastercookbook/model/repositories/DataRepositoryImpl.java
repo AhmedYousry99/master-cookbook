@@ -46,12 +46,6 @@ public class DataRepositoryImpl implements DataRepository {
         this.dbLocalDataSource = dbLocalDataSource;
     }
 
-
-    @Override
-    public void addUser(UserDTO userDTO, DatabaseCallback databaseCallback) {
-        dbRemoteDataSource.addUser(userDTO, databaseCallback);
-    }
-
     @Override
     public void getUserByEmail(String email, GetUserByEmailCallback callback) {
         dbRemoteDataSource.getUserByEmail(email, callback);
@@ -110,17 +104,17 @@ public class DataRepositoryImpl implements DataRepository {
     }
 
     @Override
-    public Single<List<MealSimplifiedModel>> getFavoriteMeals(String userId) {
+    public Single<List<MealSimplifiedModel>> getLocalFavoriteMeals(String userId) {
         return dbLocalDataSource.getAllFavoriteMeals(userId);
     }
 
     @Override
-    public Completable addMealToFavorites(MealSimplifiedModel meal) {
+    public Completable addLocalMealToFavorites(MealSimplifiedModel meal) {
         return dbLocalDataSource.addMealIntoFavorite(meal);
     }
 
     @Override
-    public Completable deleteMealFromFavorite(MealSimplifiedModel meal) {
+    public Completable deleteLocalMealFromFavorite(MealSimplifiedModel meal) {
         return dbLocalDataSource.deleteMealFromFavorite(meal);
     }
 
@@ -130,18 +124,33 @@ public class DataRepositoryImpl implements DataRepository {
     }
 
     @Override
-    public Single<List<PlanDTO>> getUserPlan(String userId) {
+    public Single<List<PlanDTO>> getLocalUserPlan(String userId) {
         return dbLocalDataSource.getPlanMeals(userId);
     }
 
     @Override
-    public Completable addMealToPlan(PlanDTO planDTO) {
+    public Completable addLocalMealToPlan(PlanDTO planDTO) {
         return dbLocalDataSource.addMealIntoPlan(planDTO);
     }
 
     @Override
-    public Completable deleteMealFromPlan(PlanDTO planDTO) {
+    public Completable deleteLocalMealFromPlan(PlanDTO planDTO) {
         return dbLocalDataSource.deleteMealFromPlan(planDTO);
+    }
+
+    @Override
+    public Completable addLocalMealToMultipleDaysInPlan(List<PlanDTO> plans) {
+        return dbLocalDataSource.addMealToMultipleDaysInPlan(plans);
+    }
+
+    @Override
+    public Single<List<MealDTO>> getMealsByCountry(String country) {
+        return foodRemoteDataSource.getMealsByCountry(country);
+    }
+
+    @Override
+    public Single<List<MealDTO>> getMealsByCategory(String category) {
+        return foodRemoteDataSource.getMealsByCategory(category);
     }
 
     @Override

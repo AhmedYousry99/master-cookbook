@@ -102,4 +102,13 @@ public class SearchDetailedPresenterImpl implements SearchDetailedPresenter {
         compositeDisposable.clear();
     }
 
+    @Override
+    public void reloadState(List<MealSimplifiedModel> meals, SearchType searchType, List<String> suggestions) {
+        if(searchType.equals(SearchType.Name))
+            searchDetailedView.initTextObservable();
+        else
+            searchDetailedView.updateSearchList(suggestions);
+        searchDetailedView.updateMealsList(meals);
+    }
+
 }

@@ -20,5 +20,7 @@ public interface DBLocalDataSource {
 
     Completable addMealIntoPlan(PlanDTO plan);
 
+    Completable addMealToMultipleDaysInPlan(List<PlanDTO> plans);
+
     Completable deleteMealFromPlan(PlanDTO plan);
 }

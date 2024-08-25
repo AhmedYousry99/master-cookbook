@@ -19,9 +19,5 @@
         android:id="@+id/PlanFragment"
         android:icon="@drawable/plan_ic"
         android:title="@string/title_plan" />
-    <item
-        android:id="@+id/ProfileFragment"
-        android:icon="@drawable/account_ic"
-        android:title="@string/title_profile" />
 
 </menu>

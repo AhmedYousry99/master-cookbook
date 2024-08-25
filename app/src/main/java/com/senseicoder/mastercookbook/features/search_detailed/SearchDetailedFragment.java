@@ -7,10 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +29,12 @@ import com.senseicoder.mastercookbook.R;
 import com.senseicoder.mastercookbook.db.local.RoomLocalDateSourceImpl;
 import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.features.search_detailed.adapters.SearchDetailedAdapter;
+import com.senseicoder.mastercookbook.features.search_detailed.listeners.SearchDetailedRecyclerListeners;
 import com.senseicoder.mastercookbook.features.search_detailed.presenter.SearchDetailedPresenter;
 import com.senseicoder.mastercookbook.features.search_detailed.presenter.SearchDetailedPresenterImpl;
 import com.senseicoder.mastercookbook.features.search_detailed.view.SearchDetailedView;
 import com.senseicoder.mastercookbook.model.DTOs.MealSimplifiedModel;
+import com.senseicoder.mastercookbook.model.MealKeys;
 import com.senseicoder.mastercookbook.model.repositories.DataRepositoryImpl;
 import com.senseicoder.mastercookbook.network.RetrofitRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.util.enums.SearchType;
@@ -44,7 +48,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 
 
-public class SearchDetailedFragment extends Fragment implements SearchDetailedView {
+public class SearchDetailedFragment extends Fragment implements SearchDetailedView, SearchDetailedRecyclerListeners {
 
     private static final String TAG = "SearchDetailedFragment";
 
@@ -63,12 +67,13 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
     Observable<String> textObservable;
 
     String currentText;
+    List<String> suggestions;
+    List<MealSimplifiedModel> meals;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         searchType = SearchDetailedFragmentArgs.fromBundle(getArguments()).getSearchType();
-        NavHostFragment navHostFragment = UiUtils.getNavHostFragment(getActivity());
     }
 
     @Override
@@ -89,12 +94,12 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
         mealDoesntExitTextView = getView().findViewById(R.id.mealDoesntExitTextView);
 
         searchView.setQueryHint(setQueryHint(searchType));
-        adapter = new SearchDetailedAdapter(new ArrayList<>(), getContext());
+        adapter = new SearchDetailedAdapter(new ArrayList<>(), getContext(), this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         searchDetailedRecyclerView.setLayoutManager(layoutManager);
-
         searchDetailedRecyclerView.setAdapter(adapter);
+
         presenter = new SearchDetailedPresenterImpl(
                 DataRepositoryImpl.getInstance(
                         FirebaseFirestoreRemoteDataSourceImpl.getInstance(),
@@ -103,15 +108,13 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
                 ),
                 this
         );
+
         searchView.clearFocus();
-
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.getListByType(searchType);
+        if(meals == null)
+            presenter.getListByType(searchType);
+        else{
+            presenter.reloadState(meals, searchType, suggestions);
+        }
     }
 
     @Override
@@ -120,6 +123,7 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
         suggestionListView.setVisibility(View.GONE);
         if(meals.isEmpty())
             mealDoesntExitTextView.setVisibility(View.VISIBLE);
+        this.meals = meals;
         adapter.updateList(meals);
     }
 
@@ -127,7 +131,8 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
     public void updateSearchList(List<String> suggestions) {
         setupListeners();
         suggestionAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_dropdown_item_1line, suggestions.subList(0, Math.min(suggestions.size(), 4)));
+                android.R.layout.simple_dropdown_item_1line, suggestions);
+        this.suggestions = suggestions;
         suggestionListView.setAdapter(suggestionAdapter);
         searchDetailedProgressBar.setVisibility(View.GONE);
         searchDetailedGroup.setVisibility(View.VISIBLE);
@@ -148,17 +153,10 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
         searchDetailedGroup.setVisibility(View.VISIBLE);
         suggestionListView.setVisibility(View.GONE);
         textObservable = Observable.create( emitter -> {
-                searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
-                    if (hasFocus)
-                        suggestionListView.setVisibility(View.VISIBLE);
-                    else {
-                        suggestionListView.setVisibility(View.GONE);
-                    }
-                });
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    searchView.clearFocus();
+                    UiUtils.hideKeyboardFrom(getContext(), getView());
                     return true;
                 }
 
@@ -192,31 +190,29 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
                 suggestionListView.setVisibility(View.GONE);
             }
         });
-        searchView.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-            }
-        });
         suggestionListView.setOnItemClickListener((parent, v, position, id) -> {
             String suggestion = (String) parent.getItemAtPosition(position);
             searchView.setQuery(suggestion, true);
             Log.d(TAG, "onItemClick: " + suggestion);
-            suggestionListView.setVisibility(View.GONE);
             searchView.clearFocus();
-            if(!currentText.equals(suggestion))
+            suggestionListView.setVisibility(View.GONE);
+            if(currentText == null || !currentText.equals(suggestion)){
+                Log.d(TAG, "onItemClick: working");
                 presenter.getMealsBySearchWord(suggestion, searchType);
+                currentText = suggestion;
+            }
+
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
+                suggestionListView.setVisibility(View.GONE);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                currentText = newText;
                 Log.d(TAG, "onQueryTextChange: " + newText);
                 suggestionListView.setVisibility(View.VISIBLE);
                 suggestionAdapter.getFilter().filter(newText);
@@ -246,4 +242,10 @@ public class SearchDetailedFragment extends Fragment implements SearchDetailedVi
         return queryHintText;
     }
 
+    @Override
+    public void onItemClicked(String mealId) {
+        SearchDetailedFragmentDirections.ActionSearchDetailedFragmentToMealFragment action =
+                SearchDetailedFragmentDirections.actionSearchDetailedFragmentToMealFragment(mealId);
+        Navigation.findNavController(getView()).navigate(action);
+    }
 }

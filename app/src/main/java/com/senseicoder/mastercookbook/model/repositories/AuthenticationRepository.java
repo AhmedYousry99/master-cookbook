@@ -15,4 +15,8 @@ public interface AuthenticationRepository {
     public void loginUsingFacebookEmail(LoginAuthCallback loginAuthCallback);
 
     public void loginUsingGuest(LoginAuthCallback loginAuthCallback);
+
+    boolean isUserGuest();
+
+    void signOut();
 }

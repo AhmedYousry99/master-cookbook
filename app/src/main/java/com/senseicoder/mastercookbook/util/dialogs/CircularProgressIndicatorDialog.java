@@ -35,7 +35,8 @@ public class CircularProgressIndicatorDialog {
 
     public void dismissProgressBar()
     {
-        alertDialog.dismiss();
+        if(alertDialog != null)
+            alertDialog.dismiss();
     }
 
 }

@@ -19,8 +19,6 @@ import io.reactivex.rxjava3.core.Single;
 
 public interface DataRepository {
 
-    void addUser(UserDTO userDTO, DatabaseCallback databaseCallback);
-
     void getUserByEmail(String email, GetUserByEmailCallback callback);
 
     void getUserByIdOrAddUser(UserDTO userDTO, GetUserByIdOrAddUserCallback callback);
@@ -41,18 +39,24 @@ public interface DataRepository {
 
     Single<List<MealDTO>> searchMeal(String word, SearchType type);
 
-    Single<List<MealSimplifiedModel>> getFavoriteMeals(String userId);
+    Single<List<MealSimplifiedModel>> getLocalFavoriteMeals(String userId);
 
-    Completable addMealToFavorites(MealSimplifiedModel meal);
+    Completable addLocalMealToFavorites(MealSimplifiedModel meal);
 
-    Completable deleteMealFromFavorite(MealSimplifiedModel meal);
+    Completable deleteLocalMealFromFavorite(MealSimplifiedModel meal);
 
     void setCurrentUser(UserDTO userDTO);
 
-    Single<List<PlanDTO>> getUserPlan(String userId);
+    Single<List<PlanDTO>> getLocalUserPlan(String userId);
 
-    Completable addMealToPlan(PlanDTO planDTO);
+    Completable addLocalMealToPlan(PlanDTO planDTO);
 
-    Completable deleteMealFromPlan(PlanDTO planDTO);
+    Completable deleteLocalMealFromPlan(PlanDTO planDTO);
+
+    Completable addLocalMealToMultipleDaysInPlan(List<PlanDTO> plans);
+
+    Single<List<MealDTO>> getMealsByCountry(String country);
+
+    Single<List<MealDTO>> getMealsByCategory(String category);
 
 }

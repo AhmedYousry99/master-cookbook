@@ -18,25 +18,18 @@ public class FavoritePresenterImpl implements FavoritePresenter{
         this.dataRepository = dataRepository;
         this.favoriteView = favoriteView;
         this.compositeDisposable = new CompositeDisposable();
+        compositeDisposable.add(favoriteView.initiateNetworkObserver().observeOn(AndroidSchedulers.mainThread()).subscribe(favoriteView::handleConnection));
     }
 
 
     @Override
     public void getFavorites() {
-        compositeDisposable.add(dataRepository.getFavoriteMeals(dataRepository.getCurrentUser().getId()).observeOn(AndroidSchedulers.mainThread()).subscribe(favoriteView::updateList));
+        compositeDisposable.add(dataRepository.getLocalFavoriteMeals(dataRepository.getCurrentUser().getId()).observeOn(AndroidSchedulers.mainThread()).subscribe(favoriteView::updateList));
     }
 
     @Override
     public void deleteMeal(MealSimplifiedModel meal) {
-        compositeDisposable.add(dataRepository.deleteMealFromFavorite(meal).observeOn(AndroidSchedulers.mainThread()).subscribe(favoriteView::onMealDeletedSuccess, favoriteView::onFailure));
-    }
-
-    @Override
-    public void getMealData(MealSimplifiedModel meal) {
-        compositeDisposable.add(dataRepository.getMealDetailsById(meal.getId()).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                favoriteView::onGetMealDataSuccess,
-                favoriteView::onFailure
-        ));
+        compositeDisposable.add(dataRepository.deleteLocalMealFromFavorite(meal).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> favoriteView.onMealDeletedSuccess(meal), favoriteView::onFailure));
     }
 
     @Override

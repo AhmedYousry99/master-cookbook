@@ -25,7 +25,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.senseicoder.mastercookbook.R;
 import com.senseicoder.mastercookbook.db.local.RoomLocalDateSourceImpl;
 import com.senseicoder.mastercookbook.db.remote.FirebaseFirestoreRemoteDataSourceImpl;
-import com.senseicoder.mastercookbook.firebase.FirebaseAuthRemoteDataSourceImpl;
+import com.senseicoder.mastercookbook.authentication.FirebaseAuthRemoteDataSourceImpl;
 import com.senseicoder.mastercookbook.features.main.MainActivity;
 import com.senseicoder.mastercookbook.features.initial.presenter.InitialActivityPresenter;
 import com.senseicoder.mastercookbook.features.initial.presenter.InitialActivityPresenterImpl;

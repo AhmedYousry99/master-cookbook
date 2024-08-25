@@ -9,4 +9,8 @@
         <item name="android:editTextColor">@color/primary</item>
         <item name="android:textColorHint">@color/primary_faded</item>
     </style>
+
+    <style name="PrimaryTheme" parent="Widget.Material3.Button">
+        <item name="android:colorPrimary">@color/primary</item>
+    </style>
 </resources>

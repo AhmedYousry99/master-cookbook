@@ -3,6 +3,8 @@ package com.senseicoder.mastercookbook.model.DTOs;
 import com.google.gson.annotations.SerializedName;
 import com.senseicoder.mastercookbook.model.MealKeys;
 
+import java.util.Objects;
+
 public class CategoryDTO {
 
     @SerializedName(MealKeys.STR_CATEGORY)
@@ -41,15 +43,20 @@ public class CategoryDTO {
         return thumbnail;
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryDTO)) return false;
+        CategoryDTO that = (CategoryDTO) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

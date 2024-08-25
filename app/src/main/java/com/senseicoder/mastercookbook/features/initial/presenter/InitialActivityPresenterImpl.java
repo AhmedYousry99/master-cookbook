@@ -1,6 +1,6 @@
 package com.senseicoder.mastercookbook.features.initial.presenter;
 
-import static com.senseicoder.mastercookbook.firebase.FirebaseAuthRemoteDataSourceImpl.firebaseGoogleWebId;
+import static com.senseicoder.mastercookbook.authentication.FirebaseAuthRemoteDataSourceImpl.firebaseGoogleWebId;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -52,7 +52,7 @@ public class InitialActivityPresenterImpl implements InitialActivityPresenter, L
 
     @Override
     public void onLoginAuthSuccess(UserDTO userDTO) {
-        if(userDTO.getId() != null)
+        if(userDTO != null)
         {
             dataRepository.getUserByIdOrAddUser(userDTO, new GetUserByIdOrAddUserCallback() {
                 @Override

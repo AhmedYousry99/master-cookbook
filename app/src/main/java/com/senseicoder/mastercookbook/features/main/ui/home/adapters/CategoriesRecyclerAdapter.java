@@ -33,7 +33,7 @@ public class CategoriesRecyclerAdapter extends RecyclerView.Adapter<CategoriesVi
     @NonNull
     @Override
     public CategoriesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        return new CategoriesViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_tile_small, viewGroup, false));
+        return new CategoriesViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_category_list_tile_small, viewGroup, false));
     }
 
     @Override
@@ -58,9 +58,9 @@ class CategoriesViewHolder extends RecyclerView.ViewHolder{
 
     public CategoriesViewHolder(@NonNull View itemView) {
         super(itemView);
-        this.title = itemView.findViewById(R.id.smallListTitleTextView);
-        this.cardView = itemView.findViewById(R.id.smallListCardView);
-        this.backgroundImage = itemView.findViewById(R.id.smallListTileImageView);
+        this.title = itemView.findViewById(R.id.homeCategorySmallListTitleTextView);
+        this.cardView = itemView.findViewById(R.id.homeCategorySmallListCardView);
+        this.backgroundImage = itemView.findViewById(R.id.homeCategorySmallListTileImageView);
     }
 
     public TextView getTitle() {

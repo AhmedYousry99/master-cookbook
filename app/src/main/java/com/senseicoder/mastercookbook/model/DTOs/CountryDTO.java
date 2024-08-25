@@ -3,6 +3,8 @@ package com.senseicoder.mastercookbook.model.DTOs;
 import com.google.gson.annotations.SerializedName;
 import com.senseicoder.mastercookbook.model.MealKeys;
 
+import java.util.Objects;
+
 public class CountryDTO {
 
     @SerializedName(MealKeys.STR_AREA)
@@ -27,7 +29,16 @@ public class CountryDTO {
         return countryFlag;
     }
 
-    public void setCountryFlag(int countryFlag) {
-        this.countryFlag = countryFlag;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CountryDTO)) return false;
+        CountryDTO that = (CountryDTO) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 }
