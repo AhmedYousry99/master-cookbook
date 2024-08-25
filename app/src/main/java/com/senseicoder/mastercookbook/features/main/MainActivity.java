@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     Toolbar toolbar;
     BottomNavigationView navView;
     NavController navController;
+    AppBarConfiguration appBarConfiguration;
     private static final String TAG = "MainActivity";
     private MainPresenter presenter;
 
@@ -71,7 +73,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 this
         );
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.title_home);
+        toolbar.showOverflowMenu();
+        appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.HomeFragment, R.id.SearchFragment, R.id.FavoriteFragment, R.id.PlanFragment)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home);
@@ -85,8 +90,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
             }
                 setupNavigationListener(navDestination);
         });
-        setSupportActionBar(toolbar);
-        toolbar.showOverflowMenu();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
     private void setupNavigationListener(NavDestination navDestination) {
