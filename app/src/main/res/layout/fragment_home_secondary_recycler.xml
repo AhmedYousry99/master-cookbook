@@ -17,5 +17,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/list_tile_small" />
+        tools:listitem="@layout/home_category_list_tile_small" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="8dp"
+    android:background="@drawable/dialog_border"
+    android:minWidth="350dp"
+    android:minHeight="200dp">
+
+    <TextView
+        android:id="@+id/planDialogContextTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:text="@string/plan_date_content_text"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/planDialogContextTextView"
+        app:layout_constraintStart_toStartOf="@+id/planDialogContextTextView"
+        app:layout_constraintTop_toBottomOf="@+id/planDialogContextTextView"
+        app:selectionRequired="false"
+        app:singleSelection="false">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/saterdayChip"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary"
+            android:text="@string/saterday_chip"
+            android:textColor="@color/primary"
+            app:checkedIconTint="@color/primary"
+            app:chipBackgroundColor="@color/on_primary"
+            app:rippleColor="@color/primary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sundayChip"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary"
+            android:text="@string/sunday_chip"
+            android:textColor="@color/primary"
+            app:checkedIconTint="@color/primary"
+            app:chipBackgroundColor="@color/on_primary"
+            app:rippleColor="@color/primary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/mondayChip"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary"
+            android:text="@string/monday_chip"
+            android:textColor="@color/primary"
+            app:checkedIconTint="@color/primary"
+            app:chipBackgroundColor="@color/on_primary"
+            app:rippleColor="@color/primary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tuesdayChip"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary"
+            android:text="@string/tuesday_chip"
+            android:textColor="@color/primary"
+            app:checkedIconTint="@color/primary"
+            app:chipBackgroundColor="@color/on_primary"
+            app:rippleColor="@color/primary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/wednesdayChip"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary"
+            android:text="@string/wednesday_chip"
+            android:textColor="@color/primary"
+            app:checkedIconTint="@color/primary"
+            app:chipBackgroundColor="@color/on_primary"
+            app:rippleColor="@color/primary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/thursdayChip"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary"
+            android:text="@string/thursday_chip"
+            android:textColor="@color/primary"
+            app:checkedIconTint="@color/primary"
+            app:chipBackgroundColor="@color/on_primary"
+            app:rippleColor="@color/primary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/fridayChip"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/on_primary"
+            android:text="@string/friday_chip"
+            android:textColor="@color/primary"
+            app:checkedIconTint="@color/primary"
+            app:chipBackgroundColor="@color/on_primary"
+            app:rippleColor="@color/primary" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <Button
+        android:id="@+id/planDialogCancelButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/secondary"
+        android:text="@string/dialog_on_cancel_default"
+        android:textColor="@color/on_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/planDialogConfirmButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+
+    <Button
+        android:id="@+id/planDialogConfirmButton"
+        style="@style/PrimaryTheme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:enabled="false"
+        android:text="@string/plan_date_picker_confirm_text"
+        android:textColor="@color/on_primary"
+        android:theme="@style/PrimaryTheme"
+        app:layout_constraintBottom_toBottomOf="@+id/planDialogCancelButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/planDialogCancelButton"
+        app:layout_constraintTop_toTopOf="@+id/planDialogCancelButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

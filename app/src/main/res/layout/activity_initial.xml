@@ -63,7 +63,7 @@
         android:gravity="center"
         android:text="@string/log_in_text"
         android:textColor="@color/on_primary"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailSignupButton" />
@@ -72,18 +72,16 @@
         android:id="@+id/emailSignupButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
         android:backgroundTint="@color/white"
         android:text="@string/sign_up_email_text"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:icon="@drawable/email_ic"
         app:iconSize="28dp"
         app:iconTint="@color/primary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/googleLoginButton"
+        app:layout_constraintStart_toStartOf="@+id/googleLoginButton"
         app:layout_constraintTop_toBottomOf="@+id/googleLoginButton" />
 
     <ImageButton
@@ -91,6 +89,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/google_rounded_image_button"
         android:backgroundTint="@color/google_color"
@@ -98,7 +97,7 @@
         app:layout_constraintEnd_toStartOf="@+id/facebookLoginButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/facebookLoginButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:srcCompat="@drawable/google_ic" />
 
     <ImageButton
@@ -110,6 +109,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/facebook_rounded_image_button"
         android:contentDescription="@string/google_text"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/googleLoginButton"

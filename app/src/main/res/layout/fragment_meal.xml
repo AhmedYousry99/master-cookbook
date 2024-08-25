@@ -59,7 +59,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/mealFavouritebutton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,6 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:hapticFeedbackEnabled="true"
                     android:background="@drawable/rounded_transparent_background"
                     android:contentDescription="@string/add_to_plan_content_description"
                     android:padding="8dp"
