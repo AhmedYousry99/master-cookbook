@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/HomeFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.senseicoder.mastercookbook.features.main.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_HomeFragment_to_mealFragment"
+            app:destination="@id/mealFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/HomeFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_HomeFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="com.senseicoder.mastercookbook.features.main.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_SearchFragment_to_searchDetailedFragment"
+            app:destination="@id/searchDetailedFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/SearchFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FavoriteFragment"
+        android:name="com.senseicoder.mastercookbook.features.main.ui.favorite.FavoriteFragment"
+        android:label="@string/title_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_FavoriteFragment_to_mealFragment"
+            app:destination="@id/mealFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/PlanFragment"
+        android:name="com.senseicoder.mastercookbook.features.main.ui.plan.PlanFragment"
+        android:label="@string/title_plan"
+        tools:layout="@layout/fragment_plan" >
+        <action
+            android:id="@+id/action_PlanFragment_to_mealFragment"
+            app:destination="@id/mealFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealFragment"
+        android:name="com.senseicoder.mastercookbook.features.meal.MealFragment"
+        android:label="@string/meal_fragment"
+        tools:layout="@layout/fragment_meal">
+        <argument
+            android:name="mealId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchDetailedFragment"
+        android:name="com.senseicoder.mastercookbook.features.search_detailed.SearchDetailedFragment"
+        android:label="@string/search_detailed_fragment"
+        tools:layout="@layout/fragment_search_detailed">
+        <argument
+            android:name="searchType"
+            app:argType="com.senseicoder.mastercookbook.util.enums.SearchType" />
+        <action
+            android:id="@+id/action_searchDetailedFragment_to_mealFragment"
+            app:destination="@id/mealFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealsFragment"
+        android:name="com.senseicoder.mastercookbook.features.meals.MealsFragment"
+        android:label="@string/meals_fragment"
+        tools:layout="@layout/fragment_meals">
+        <argument
+            android:name="word"
+            app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="com.senseicoder.mastercookbook.util.enums.SearchType" />
+        <action
+            android:id="@+id/action_mealsFragment_to_mealFragment"
+            app:destination="@id/mealFragment" />
+    </fragment>
+</navigation>

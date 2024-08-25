@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchDetailedCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="20dp"
+    android:backgroundTint="@color/on_primary"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="25dp"
+    app:cardMaxElevation="25dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/searchDetailedListTileImageContainer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/searchDetailedListTileImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/food_photo" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/searchDetailedListTileTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="Shawarma"
+            android:textAlignment="center"
+            android:textColor="@color/primary"
+            app:layout_constraintBottom_toTopOf="@+id/searchDetailedListTileCategory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchDetailedListTileImageContainer"
+            app:layout_constraintTop_toTopOf="@+id/searchDetailedListTileImageContainer" />
+
+        <TextView
+            android:id="@+id/searchDetailedListTileCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Origin: Egyptian"
+            android:textAlignment="center"
+            android:textColor="@color/primary"
+            app:layout_constraintBottom_toTopOf="@+id/searchDetailedListTileCountry"
+            app:layout_constraintEnd_toEndOf="@+id/searchDetailedListTileTitle"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/searchDetailedListTileTitle"
+            app:layout_constraintTop_toBottomOf="@+id/searchDetailedListTileTitle" />
+
+        <TextView
+            android:id="@+id/searchDetailedListTileCountry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Category: Chicken"
+            android:textAlignment="center"
+            android:textColor="@color/primary"
+            app:layout_constraintBottom_toBottomOf="@+id/searchDetailedListTileImageContainer"
+            app:layout_constraintEnd_toEndOf="@+id/searchDetailedListTileTitle"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/searchDetailedListTileTitle"
+            app:layout_constraintTop_toBottomOf="@+id/searchDetailedListTileCategory" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
